@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { calculateSubjectBalance } from '@/lib/streaks/streak-engine';
-import { todayId, formatMinutes } from '@/lib/time/ist';
+import { formatMinutes } from '@/lib/time/ist';
+import { askAICoach } from '@/lib/ai/llm-client';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { Sparkles, Brain, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export const AIPoweredPlanner: React.FC = () => {
-  const { state, todayStats, saveTask } = useKronos();
+  const { state, saveTask } = useKronos();
 
   const [activePlan, setActivePlan] = useState<'daily' | 'weekly' | 'weakness' | 'recovery'>('daily');
+  const [liveAdvice, setLiveAdvice] = useState<string | null>(null);
+  const [loadingAdvice, setLoadingAdvice] = useState(false);
 
   const balanceData = calculateSubjectBalance(state, 7);
   const weakestSubject = Object.entries(balanceData).sort((a, b) => a[1].pct - b[1].pct)[0];
@@ -17,12 +20,20 @@ export const AIPoweredPlanner: React.FC = () => {
   const unresolvedBacklog = state.backlog.filter(b => b.status === 'unresolved');
   const mistakes = state.mistakes;
 
-  // AI Daily Schedule Generator
+  // Trigger Live AI Coach Response
+  const handleFetchAdvice = async () => {
+    setLoadingAdvice(true);
+    const result = await askAICoach("Provide a 2-sentence strategy for today's study schedule.", state);
+    setLiveAdvice(result);
+    setLoadingAdvice(false);
+  };
+
+  // AI Daily Task Injector
   const generateDailyTasks = () => {
     const primarySubj = state.goal.weakArea ? state.goal.weakArea.split('•')[0].trim() : (state.goal.subjects[0] || 'General');
     
     saveTask({
-      title: `[AI] Solve 30 practice problems in ${primarySubj}`,
+      title: `[AI Mission] Solve 30 practice problems in ${primarySubj}`,
       subject: primarySubj,
       priority: 'critical',
       estimate: 90,
@@ -32,7 +43,7 @@ export const AIPoweredPlanner: React.FC = () => {
     });
 
     saveTask({
-      title: `[AI] Focused formula & key concepts revision block`,
+      title: `[AI Focus] Key concepts & formula revision block`,
       subject: weakestSubject ? weakestSubject[0] : 'Revision',
       priority: 'high',
       estimate: 45,
@@ -77,10 +88,23 @@ export const AIPoweredPlanner: React.FC = () => {
             <p className="panel-subtitle">
               Calculated for <strong>{state.goal.dailyHours}h daily target</strong>. Primary focus set to <strong>{state.goal.weakArea}</strong>.
             </p>
-            <Button variant="ghost" onClick={generateDailyTasks}>
-              + Auto-Inject AI Suggested Tasks into Today
-            </Button>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <Button variant="ghost" onClick={handleFetchAdvice} disabled={loadingAdvice}>
+                {loadingAdvice ? 'Consulting AI...' : 'Ask AI Coach'}
+              </Button>
+              <Button variant="ghost" onClick={generateDailyTasks}>
+                + Auto-Inject AI Suggested Tasks
+              </Button>
+            </div>
           </div>
+
+          {liveAdvice && (
+            <div className="panel" style={{ padding: '12px', background: 'var(--ivory)', border: '1px solid var(--line-gold)' }}>
+              <strong style={{ fontSize: '12px', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Live AI Coach Response:</strong>
+              <p style={{ margin: '4px 0 0', fontSize: '13.5px', lineHeight: 1.5 }}>{liveAdvice}</p>
+            </div>
+          )}
+
           <div className="task-list">
             <div className="task-row">
               <Badge tone="red">Critical Priority</Badge>
@@ -93,7 +117,7 @@ export const AIPoweredPlanner: React.FC = () => {
               <Badge tone="gold">High Priority</Badge>
               <div>
                 <div className="task-title">{weakestSubject[0]} Revision & Practice (60 mins)</div>
-                <div className="task-meta">Only {weakestSubject[1].pct}% of PCM study time was spent on this module over 7 days.</div>
+                <div className="task-meta">Only {weakestSubject[1].pct}% of study time was spent on this module over 7 days.</div>
               </div>
             </div>
           </div>
