@@ -58,6 +58,25 @@ export interface Settings {
   mode: string;
   studyDayCutoff: string;
   successThreshold: number;
+  
+  // Phase B: Deep Customization
+  fontScale: 'small' | 'normal' | 'large';
+  density: 'comfortable' | 'compact' | 'spacious';
+  showSeconds: boolean;
+  compactMode: boolean;
+  chartStyle: 'line' | 'bar' | 'area';
+  
+  notificationsEnabled: boolean;
+  dailyReminderTime: string;
+  streakReminder: boolean;
+  
+  keyboardShortcutsEnabled: boolean;
+  
+  // Domain presets
+  defaultDomain: string;
+  
+  // Privacy
+  analyticsOptIn: boolean;
 }
 
 export interface StudySession {

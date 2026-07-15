@@ -49,7 +49,20 @@ export function cleanState(): AppState {
       name: 'Aspirant',
       mode: 'Strict IST Mode',
       studyDayCutoff: '00:00',
-      successThreshold: 70
+      successThreshold: 70,
+      
+      // Phase B: Expanded Settings
+      fontScale: 'normal',
+      density: 'comfortable',
+      showSeconds: true,
+      compactMode: false,
+      chartStyle: 'line',
+      notificationsEnabled: true,
+      dailyReminderTime: '21:00',
+      streakReminder: true,
+      keyboardShortcutsEnabled: true,
+      defaultDomain: 'General',
+      analyticsOptIn: true
     },
     goal: {
       name: 'Primary Target',

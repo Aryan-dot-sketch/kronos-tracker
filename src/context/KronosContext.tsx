@@ -63,7 +63,7 @@ interface KronosContextType {
 
   // Review & Settings
   saveDailyReview: (reviewData: Partial<DailyReview>) => void;
-  saveSettings: (settingsData: Partial<AppState['settings']>, theme: ThemeType) => void;
+  saveSettings: (settingsData: Partial<AppState['settings']>, theme?: ThemeType) => void;
   importJSONState: (jsonStr: string) => boolean;
   clearStateData: () => void;
 
@@ -486,11 +486,11 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast('Night review saved in IST');
   };
 
-  const saveSettings = (settingsData: Partial<AppState['settings']>, theme: ThemeType) => {
+  const saveSettings = (settingsData: Partial<AppState['settings']>, theme?: ThemeType) => {
     updateState(prev => ({
       ...prev,
       settings: { ...prev.settings, ...settingsData },
-      ui: { ...prev.ui, theme }
+      ui: theme ? { ...prev.ui, theme } : prev.ui
     }));
     showToast('Settings saved');
   };

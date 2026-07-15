@@ -93,7 +93,18 @@ export async function fetchStateFromCloud(userId: string): Promise<Partial<AppSt
         name: profile.name,
         mode: profile.mode,
         studyDayCutoff: profile.study_day_cutoff,
-        successThreshold: profile.success_threshold
+        successThreshold: profile.success_threshold,
+        fontScale: 'normal',
+        density: 'comfortable',
+        showSeconds: true,
+        compactMode: false,
+        chartStyle: 'line',
+        notificationsEnabled: true,
+        dailyReminderTime: '21:00',
+        streakReminder: true,
+        keyboardShortcutsEnabled: true,
+        defaultDomain: 'General',
+        analyticsOptIn: true
       } : undefined,
       goal: goal ? {
         name: goal.name,
