@@ -1,180 +1,180 @@
 /* ============================================
-   KRONOS TRACKER — THE CRAZIEST PREMIUM THEMES
-   Dramatic, luxurious, extreme contrast, insane golds
+   KRONOS TRACKER — THE CRAZIEST ULTRA-LUXURY THEMES
+   Extremely dramatic, luxurious, insane contrast & golds
    ============================================ */
 
-/* THEME 1: CLASSIC CREAM — Warm, Opulent, Rich */
+/* THEME 1: CLASSIC CREAM — Warm, Opulent, Royal */
 :root, [data-theme="light"] {
-  --bg-main: #f2e8d6;
-  --bg-surface: #fff7e8;
+  --bg-main: #f1e4cc;
+  --bg-surface: #fff5e3;
   --bg-surface-soft: #ffffff;
-  --bg-card: #fff7e8;
+  --bg-card: #fff5e3;
 
-  --text-primary: #0f0d0a;
-  --text-secondary: #36322a;
-  --text-muted: #514b40;
+  --text-primary: #0c0a07;
+  --text-secondary: #322d24;
+  --text-muted: #4a4336;
 
   --gold: #c98f2b;
-  --gold-light: #f0c05a;
+  --gold-light: #f2c05a;
   --gold-dark: #7f4f0a;
-  --gold-soft: rgba(201, 143, 43, 0.25);
-  --gold-gradient: linear-gradient(135deg, #f0c05a 0%, #c98f2b 38%, #7f4f0a 100%);
+  --gold-soft: rgba(201, 143, 43, 0.28);
+  --gold-gradient: linear-gradient(135deg, #f2c05a 0%, #c98f2b 35%, #7f4f0a 100%);
 
   --accent-green: #2e7d32;
-  --accent-green-soft: rgba(46, 125, 50, 0.22);
+  --accent-green-soft: rgba(46, 125, 50, 0.24);
   --accent-amber: #c17c1e;
-  --accent-amber-soft: rgba(193, 124, 30, 0.22);
+  --accent-amber-soft: rgba(193, 124, 30, 0.24);
   --accent-red: #c53030;
-  --accent-red-soft: rgba(197, 48, 48, 0.2);
-  --accent-blue: #2563eb;
-  --accent-blue-soft: rgba(37, 99, 235, 0.2);
-
-  --border-line: rgba(54, 50, 42, 0.22);
-  --border-gold: rgba(201, 143, 43, 0.6);
-
-  --shadow-sm: 0 6px 26px rgba(15, 13, 10, 0.1);
-  --shadow-md: 0 18px 54px rgba(15, 13, 10, 0.15);
-  --shadow-lg: 0 38px 95px rgba(15, 13, 10, 0.22);
-}
-
-/* THEME 2: OBSIDIAN GOLD — Crazy Rich Dark */
-[data-theme="dark"] {
-  --bg-main: #060403;
-  --bg-surface: #0f0c08;
-  --bg-surface-soft: #16120d;
-  --bg-card: #1e1913;
-
-  --text-primary: #fff5e6;
-  --text-secondary: #e0c9a8;
-  --text-muted: #b89e7f;
-
-  --gold: #f2ce8a;
-  --gold-light: #f9e2b3;
-  --gold-dark: #c28f1f;
-  --gold-soft: rgba(242, 206, 138, 0.35);
-  --gold-gradient: linear-gradient(135deg, #f9e2b3 0%, #f2ce8a 35%, #c28f1f 100%);
-
-  --accent-green: #6ee787;
-  --accent-green-soft: rgba(110, 231, 135, 0.32);
-  --accent-amber: #f4d17c;
-  --accent-amber-soft: rgba(244, 209, 124, 0.32);
-  --accent-red: #ff7b7b;
-  --accent-red-soft: rgba(255, 123, 123, 0.32);
-  --accent-blue: #7ab8ff;
-  --accent-blue-soft: rgba(122, 184, 255, 0.32);
-
-  --border-line: rgba(184, 158, 127, 0.18);
-  --border-gold: rgba(242, 206, 138, 0.7);
-
-  --shadow-sm: 0 7px 30px rgba(0,0,0,0.68);
-  --shadow-md: 0 24px 65px rgba(0,0,0,0.8);
-  --shadow-lg: 0 48px 120px rgba(0,0,0,0.95);
-}
-
-/* THEME 3: MIDNIGHT — Crazy Electric Bold */
-[data-theme="midnight"] {
-  --bg-main: #03050c;
-  --bg-surface: #07091a;
-  --bg-surface-soft: #0c1026;
-  --bg-card: #141a31;
-
-  --text-primary: #f0f5ff;
-  --text-secondary: #b4c0f2;
-  --text-muted: #7a87cc;
-
-  --gold: #a3b0ff;
-  --gold-light: #c9d2ff;
-  --gold-dark: #585df2;
-  --gold-soft: rgba(163, 176, 255, 0.38);
-  --gold-gradient: linear-gradient(135deg, #c9d2ff 0%, #a3b0ff 35%, #585df2 100%);
-
-  --accent-green: #6ee787;
-  --accent-green-soft: rgba(110, 231, 135, 0.35);
-  --accent-amber: #f4d17c;
-  --accent-amber-soft: rgba(244, 209, 124, 0.35);
-  --accent-red: #ff7b7b;
-  --accent-red-soft: rgba(255, 123, 123, 0.35);
-  --accent-blue: #7ab8ff;
-  --accent-blue-soft: rgba(122, 184, 255, 0.35);
-
-  --border-line: rgba(122, 135, 204, 0.24);
-  --border-gold: rgba(163, 176, 255, 0.72);
-
-  --shadow-sm: 0 7px 30px rgba(0,0,0,0.7);
-  --shadow-md: 0 24px 65px rgba(0,0,0,0.82);
-  --shadow-lg: 0 48px 120px rgba(0,0,0,0.96);
-}
-
-/* THEME 4: ROYAL EMERALD — Crazy Opulent */
-[data-theme="emerald"] {
-  --bg-main: #000f09;
-  --bg-surface: #041611;
-  --bg-surface-soft: #081f18;
-  --bg-card: #0c2c24;
-
-  --text-primary: #d8f0e0;
-  --text-secondary: #92c5a2;
-  --text-muted: #5e976f;
-
-  --gold: #f2cc7a;
-  --gold-light: #f8dcac;
-  --gold-dark: #b37b1f;
-  --gold-soft: rgba(242, 204, 122, 0.38);
-  --gold-gradient: linear-gradient(135deg, #f8dcac 0%, #f2cc7a 35%, #b37b1f 100%);
-
-  --accent-green: #6ee787;
-  --accent-green-soft: rgba(110, 231, 135, 0.38);
-  --accent-amber: #f4d17c;
-  --accent-amber-soft: rgba(244, 209, 124, 0.38);
-  --accent-red: #ff7b7b;
-  --accent-red-soft: rgba(255, 123, 123, 0.35);
-  --accent-blue: #7ab8ff;
-  --accent-blue-soft: rgba(122, 184, 255, 0.35);
-
-  --border-line: rgba(146, 197, 162, 0.24);
-  --border-gold: rgba(242, 204, 122, 0.72);
-
-  --shadow-sm: 0 7px 30px rgba(0,0,0,0.7);
-  --shadow-md: 0 24px 65px rgba(0,0,0,0.82);
-  --shadow-lg: 0 48px 120px rgba(0,0,0,0.96);
-}
-
-/* THEME 5: TITANIUM — Crazy Sharp Modern Luxury */
-[data-theme="titanium"] {
-  --bg-main: #e4ebf5;
-  --bg-surface: #ffffff;
-  --bg-surface-soft: #f4f8fc;
-  --bg-card: #ffffff;
-
-  --text-primary: #0a1426;
-  --text-secondary: #29364f;
-  --text-muted: #54637f;
-
-  --gold: #3b82f6;
-  --gold-light: #70b0ff;
-  --gold-dark: #1a3db8;
-  --gold-soft: rgba(59, 130, 246, 0.26);
-  --gold-gradient: linear-gradient(135deg, #70b0ff 0%, #3b82f6 38%, #1a3db8 100%);
-
-  --accent-green: #16a34a;
-  --accent-green-soft: rgba(22, 163, 74, 0.22);
-  --accent-amber: #c17c1e;
-  --accent-amber-soft: rgba(193, 124, 30, 0.22);
-  --accent-red: #dc2626;
-  --accent-red-soft: rgba(220, 38, 38, 0.22);
+  --accent-red-soft: rgba(197, 48, 48, 0.22);
   --accent-blue: #2563eb;
   --accent-blue-soft: rgba(37, 99, 235, 0.22);
 
-  --border-line: rgba(84, 99, 127, 0.3);
-  --border-gold: rgba(59, 130, 246, 0.62);
+  --border-line: rgba(50, 45, 36, 0.24);
+  --border-gold: rgba(201, 143, 43, 0.65);
 
-  --shadow-sm: 0 5px 22px rgba(10, 20, 38, 0.11);
-  --shadow-md: 0 16px 48px rgba(10, 20, 38, 0.16);
-  --shadow-lg: 0 34px 85px rgba(10, 20, 38, 0.22);
+  --shadow-sm: 0 7px 28px rgba(12, 10, 7, 0.11);
+  --shadow-md: 0 20px 58px rgba(12, 10, 7, 0.16);
+  --shadow-lg: 0 40px 100px rgba(12, 10, 7, 0.24);
+}
+
+/* THEME 2: OBSIDIAN GOLD — Insanely Rich Dark */
+[data-theme="dark"] {
+  --bg-main: #050302;
+  --bg-surface: #0c0905;
+  --bg-surface-soft: #14110c;
+  --bg-card: #1c1711;
+
+  --text-primary: #fff8eb;
+  --text-secondary: #e6d1b0;
+  --text-muted: #c0a88a;
+
+  --gold: #f5d28f;
+  --gold-light: #fae0b5;
+  --gold-dark: #c28f1f;
+  --gold-soft: rgba(245, 210, 143, 0.38);
+  --gold-gradient: linear-gradient(135deg, #fae0b5 0%, #f5d28f 32%, #c28f1f 100%);
+
+  --accent-green: #72e68f;
+  --accent-green-soft: rgba(114, 230, 143, 0.35);
+  --accent-amber: #f6d686;
+  --accent-amber-soft: rgba(246, 214, 134, 0.35);
+  --accent-red: #ff8585;
+  --accent-red-soft: rgba(255, 133, 133, 0.35);
+  --accent-blue: #85bfff;
+  --accent-blue-soft: rgba(133, 191, 255, 0.35);
+
+  --border-line: rgba(192, 168, 138, 0.2);
+  --border-gold: rgba(245, 210, 143, 0.75);
+
+  --shadow-sm: 0 8px 32px rgba(0,0,0,0.7);
+  --shadow-md: 0 26px 70px rgba(0,0,0,0.85);
+  --shadow-lg: 0 52px 130px rgba(0,0,0,0.97);
+}
+
+/* THEME 3: MIDNIGHT — Insanely Electric & Bold */
+[data-theme="midnight"] {
+  --bg-main: #02040b;
+  --bg-surface: #06081a;
+  --bg-surface-soft: #0a0e24;
+  --bg-card: #12182f;
+
+  --text-primary: #f0f6ff;
+  --text-secondary: #b0bef2;
+  --text-muted: #7585d0;
+
+  --gold: #a5b3ff;
+  --gold-light: #ccd5ff;
+  --gold-dark: #5559f2;
+  --gold-soft: rgba(165, 179, 255, 0.42);
+  --gold-gradient: linear-gradient(135deg, #ccd5ff 0%, #a5b3ff 32%, #5559f2 100%);
+
+  --accent-green: #72e68f;
+  --accent-green-soft: rgba(114, 230, 143, 0.38);
+  --accent-amber: #f6d686;
+  --accent-amber-soft: rgba(246, 214, 134, 0.38);
+  --accent-red: #ff8585;
+  --accent-red-soft: rgba(255, 133, 133, 0.38);
+  --accent-blue: #85bfff;
+  --accent-blue-soft: rgba(133, 191, 255, 0.38);
+
+  --border-line: rgba(117, 133, 208, 0.26);
+  --border-gold: rgba(165, 179, 255, 0.78);
+
+  --shadow-sm: 0 8px 32px rgba(0,0,0,0.72);
+  --shadow-md: 0 26px 70px rgba(0,0,0,0.87);
+  --shadow-lg: 0 52px 130px rgba(0,0,0,0.98);
+}
+
+/* THEME 4: ROYAL EMERALD — Insanely Opulent */
+[data-theme="emerald"] {
+  --bg-main: #000e08;
+  --bg-surface: #03140f;
+  --bg-surface-soft: #061c16;
+  --bg-card: #0a2a22;
+
+  --text-primary: #d4eddf;
+  --text-secondary: #8ec09c;
+  --text-muted: #5a8f6a;
+
+  --gold: #f4d07f;
+  --gold-light: #fae1b3;
+  --gold-dark: #b37b1f;
+  --gold-soft: rgba(244, 208, 127, 0.42);
+  --gold-gradient: linear-gradient(135deg, #fae1b3 0%, #f4d07f 32%, #b37b1f 100%);
+
+  --accent-green: #72e68f;
+  --accent-green-soft: rgba(114, 230, 143, 0.42);
+  --accent-amber: #f6d686;
+  --accent-amber-soft: rgba(246, 214, 134, 0.42);
+  --accent-red: #ff8585;
+  --accent-red-soft: rgba(255, 133, 133, 0.38);
+  --accent-blue: #85bfff;
+  --accent-blue-soft: rgba(133, 191, 255, 0.38);
+
+  --border-line: rgba(142, 192, 156, 0.26);
+  --border-gold: rgba(244, 208, 127, 0.78);
+
+  --shadow-sm: 0 8px 32px rgba(0,0,0,0.72);
+  --shadow-md: 0 26px 70px rgba(0,0,0,0.87);
+  --shadow-lg: 0 52px 130px rgba(0,0,0,0.98);
+}
+
+/* THEME 5: TITANIUM — Insanely Sharp Modern */
+[data-theme="titanium"] {
+  --bg-main: #e0e9f4;
+  --bg-surface: #ffffff;
+  --bg-surface-soft: #f2f7fc;
+  --bg-card: #ffffff;
+
+  --text-primary: #081021;
+  --text-secondary: #26334d;
+  --text-muted: #51617c;
+
+  --gold: #3b82f6;
+  --gold-light: #7ab5ff;
+  --gold-dark: #1835b0;
+  --gold-soft: rgba(59, 130, 246, 0.28);
+  --gold-gradient: linear-gradient(135deg, #7ab5ff 0%, #3b82f6 35%, #1835b0 100%);
+
+  --accent-green: #16a34a;
+  --accent-green-soft: rgba(22, 163, 74, 0.24);
+  --accent-amber: #c17c1e;
+  --accent-amber-soft: rgba(193, 124, 30, 0.24);
+  --accent-red: #dc2626;
+  --accent-red-soft: rgba(220, 38, 38, 0.24);
+  --accent-blue: #2563eb;
+  --accent-blue-soft: rgba(37, 99, 235, 0.24);
+
+  --border-line: rgba(81, 97, 124, 0.32);
+  --border-gold: rgba(59, 130, 246, 0.68);
+
+  --shadow-sm: 0 6px 24px rgba(8, 16, 33, 0.12);
+  --shadow-md: 0 18px 52px rgba(8, 16, 33, 0.17);
+  --shadow-lg: 0 36px 90px rgba(8, 16, 33, 0.24);
 }
 
 /* ============================================
-   MAXIMUM CONTRAST + CRAZY LUXURY BASE
+   EXTREME CONTRAST + CRAZY LUXURY
    ============================================ */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 15px; }
@@ -240,7 +240,7 @@ input:focus, select:focus, textarea:focus {
 .ghost-button, .chip-button { background: var(--bg-surface); border: 1px solid var(--border-line); color: var(--text-primary); }
 
 /* Heatmap */
-.heat-cell[data-level="4"] { background: var(--gold-gradient); border-color: var(--border-gold); box-shadow: 0 0 0 2px var(--gold-soft); }
+.heat-cell[data-level="4"] { background: var(--gold-gradient); border-color: var(--border-gold); box-shadow: 0 0 0 3px var(--gold-soft); }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -255,8 +255,8 @@ input:focus, select:focus, textarea:focus {
 
 .pwa-install-banner { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 130; background: var(--bg-surface); border: 1px solid var(--border-gold); border-radius: 9999px; padding: 10px 18px; box-shadow: var(--shadow-lg); max-width: 92vw; width: 420px; font-size: 13px; }
 
-/* Phase 3 — Crazy Premium Polish */
+/* Phase 3 — Maximum Premium Polish */
 .task-row { transition: transform .2s cubic-bezier(0.4,0,0.2,1), box-shadow .2s ease, border-color .2s ease; }
 button, .check-button { transition: transform .15s ease, background .15s ease; }
-button:active { transform: scale(0.95); }
-.heat-cell:hover { transform: scale(1.4); z-index: 5; }
+button:active { transform: scale(0.94); }
+.heat-cell:hover { transform: scale(1.45); z-index: 5; }
