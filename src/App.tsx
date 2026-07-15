@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Topbar } from '@/components/layout/Topbar';
 import { RightInsightPanel } from '@/components/layout/RightInsightPanel';
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
+import { MobileFAB } from '@/components/ui/MobileFAB';
 import { Toast } from '@/components/ui/Toast';
 
 // Modals
@@ -27,48 +29,77 @@ import { SettingsPage } from '@/pages/SettingsPage';
 
 export const AppContent: React.FC = () => {
   const { activeView, state } = useKronos();
+  const [showMobileDrawer, setShowMobileDrawer] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Theme application
   useEffect(() => {
     document.documentElement.dataset.theme = state.ui.theme || 'light';
   }, [state.ui.theme]);
 
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setShowMobileDrawer(false);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const renderActiveView = () => {
     switch (activeView) {
-      case 'dashboard':
-        return <DashboardPage />;
-      case 'today':
-        return <TodayPage />;
-      case 'goal':
-        return <GoalPage />;
-      case 'calendar':
-        return <CalendarPage />;
-      case 'analytics':
-        return <AnalyticsPage />;
-      case 'jee':
-        return <JeePage />;
-      case 'review':
-        return <ReviewPage />;
-      case 'settings':
-        return <SettingsPage />;
-      default:
-        return <DashboardPage />;
+      case 'dashboard': return <DashboardPage />;
+      case 'today': return <TodayPage />;
+      case 'goal': return <GoalPage />;
+      case 'calendar': return <CalendarPage />;
+      case 'analytics': return <AnalyticsPage />;
+      case 'jee': return <JeePage />;
+      case 'review': return <ReviewPage />;
+      case 'settings': return <SettingsPage />;
+      default: return <DashboardPage />;
     }
   };
 
   return (
     <div className="app-shell">
+      {/* Desktop Sidebar */}
       <Sidebar />
 
       <main className="workspace">
         <Topbar />
+        
         <section className="view-stage" aria-live="polite">
           {renderActiveView()}
         </section>
       </main>
 
-      <RightInsightPanel />
+      {/* Desktop Right Panel */}
+      <div className="desktop-only">
+        <RightInsightPanel />
+      </div>
 
-      {/* Modals Container */}
+      {/* Mobile Drawer for Insights */}
+      <RightInsightPanel 
+        isOpen={showMobileDrawer} 
+        onClose={() => setShowMobileDrawer(false)} 
+        isMobileDrawer={true} 
+      />
+
+      {/* Mobile Bottom Navigation */}
+      <div className="mobile-only">
+        <MobileBottomNav />
+      </div>
+
+      {/* Mobile FAB */}
+      <div className="mobile-only">
+        <MobileFAB />
+      </div>
+
+      {/* Modals */}
       <TaskModal />
       <GoalModal />
       <MilestoneModal />
