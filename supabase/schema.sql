@@ -1,7 +1,7 @@
 -- =====================================================================
--- KRONOS TRACKER — COMPLETE SUPABASE POSTGRESQL DATABASE SCHEMA
--- Execute this entire script inside Supabase SQL Editor to initialize
--- all tables, indexes, Row Level Security (RLS) policies, & triggers.
+-- KRONOS TRACKER — USERNAME + NAME + PASSWORD AUTH DATABASE SCHEMA
+-- Execute this script inside Supabase SQL Editor to initialize
+-- all tables, unique username constraints, triggers, and RLS policies.
 -- =====================================================================
 
 -- 1. Enable Required Extensions
@@ -18,11 +18,12 @@ $$ LANGUAGE plpgsql;
 
 -- ---------------------------------------------------------------------
 -- TABLE 1: PROFILES
--- Stores user profile metadata, theme preferences, and IST settings.
+-- Stores user profile metadata, unique username, theme preferences.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  name TEXT DEFAULT 'Aspirant',
+  username TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL DEFAULT 'Aspirant',
   mode TEXT DEFAULT 'Strict IST Mode',
   study_day_cutoff TEXT DEFAULT '00:00',
   success_threshold INT DEFAULT 70,
@@ -31,9 +32,10 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE INDEX IF NOT EXISTS idx_profiles_username ON public.profiles(username);
+
 -- ---------------------------------------------------------------------
 -- TABLE 2: GOALS
--- Stores long-term target goals, deadlines, and daily targets.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.goals (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -48,13 +50,13 @@ CREATE TABLE IF NOT EXISTS public.goals (
   weak_area TEXT DEFAULT '',
   risk_level TEXT DEFAULT 'Medium',
   prep_strategy TEXT DEFAULT '',
+  subjects JSONB DEFAULT '["Physics", "Chemistry", "Mathematics"]'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- ---------------------------------------------------------------------
 -- TABLE 3: MILESTONES
--- Stores monthly checkpoints linked to goals.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.milestones (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -69,7 +71,6 @@ CREATE TABLE IF NOT EXISTS public.milestones (
 
 -- ---------------------------------------------------------------------
 -- TABLE 4: WEEKLY TARGETS
--- Stores 7-day quota blocks.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.weekly_targets (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -83,12 +84,11 @@ CREATE TABLE IF NOT EXISTS public.weekly_targets (
 
 -- ---------------------------------------------------------------------
 -- TABLE 5: TASKS
--- Daily missions indexed by IST Date ID (YYYY-MM-DD).
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.tasks (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  date_id VARCHAR(10) NOT NULL, -- e.g. "2026-07-15"
+  date_id VARCHAR(10) NOT NULL,
   title TEXT NOT NULL,
   subject TEXT NOT NULL,
   priority VARCHAR(20) CHECK (priority IN ('critical', 'high', 'medium', 'low')),
@@ -108,7 +108,6 @@ CREATE INDEX IF NOT EXISTS idx_tasks_user_date ON public.tasks(user_id, date_id)
 
 -- ---------------------------------------------------------------------
 -- TABLE 6: STUDY SESSIONS
--- Timed focus sessions logged by stopwatch or Pomodoro timer.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.study_sessions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -127,7 +126,6 @@ CREATE INDEX IF NOT EXISTS idx_sessions_user_date ON public.study_sessions(user_
 
 -- ---------------------------------------------------------------------
 -- TABLE 7: DAILY SCORES / HISTORY
--- Daily score summaries aggregated per IST Date ID.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.daily_scores (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -140,7 +138,7 @@ CREATE TABLE IF NOT EXISTS public.daily_scores (
   completed_tasks INT DEFAULT 0,
   total_tasks INT DEFAULT 0,
   success BOOLEAN DEFAULT FALSE,
-  subject_minutes JSONB DEFAULT '{"Physics": 0, "Chemistry": 0, "Mathematics": 0}'::jsonb,
+  subject_minutes JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   CONSTRAINT unique_user_date_score UNIQUE (user_id, date_id)
@@ -150,7 +148,6 @@ CREATE INDEX IF NOT EXISTS idx_scores_user_date ON public.daily_scores(user_id, 
 
 -- ---------------------------------------------------------------------
 -- TABLE 8: STREAKS
--- Current and longest streak trackers per user.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.streaks (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -163,7 +160,6 @@ CREATE TABLE IF NOT EXISTS public.streaks (
 
 -- ---------------------------------------------------------------------
 -- TABLE 9: REVIEWS
--- Daily night reflection records.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.reviews (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -184,7 +180,6 @@ CREATE TABLE IF NOT EXISTS public.reviews (
 
 -- ---------------------------------------------------------------------
 -- TABLE 10: JEE CHAPTERS
--- Master syllabus chapter progress & revision stages.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.jee_chapters (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -206,7 +201,6 @@ CREATE TABLE IF NOT EXISTS public.jee_chapters (
 
 -- ---------------------------------------------------------------------
 -- TABLE 11: MOCK TESTS
--- Exam result entries and score splits.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.mock_tests (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -229,7 +223,6 @@ CREATE TABLE IF NOT EXISTS public.mock_tests (
 
 -- ---------------------------------------------------------------------
 -- TABLE 12: MISTAKES
--- Error and mistake notebook entries.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.mistakes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -244,7 +237,6 @@ CREATE TABLE IF NOT EXISTS public.mistakes (
 
 -- ---------------------------------------------------------------------
 -- TABLE 13: BACKLOG ITEMS
--- Rollover recovery backlog items.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.backlog_items (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -264,14 +256,20 @@ CREATE TABLE IF NOT EXISTS public.backlog_items (
 
 -- ---------------------------------------------------------------------
 -- AUTOMATIC PROFILE CREATION TRIGGER ON USER SIGNUP
--- Automatically creates a profile record when a user registers.
+-- Extracts `username` and `name` passed during register.
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, name)
-  VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'name', 'Aspirant'))
-  ON CONFLICT (id) DO NOTHING;
+  INSERT INTO public.profiles (id, username, name)
+  VALUES (
+    NEW.id,
+    COALESCE(NEW.raw_user_meta_data->>'username', CONCAT('user_', SUBSTRING(NEW.id::text, 1, 8))),
+    COALESCE(NEW.raw_user_meta_data->>'name', 'Aspirant')
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    username = EXCLUDED.username,
+    name = EXCLUDED.name;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -283,7 +281,6 @@ CREATE TRIGGER on_auth_user_created
 
 -- ---------------------------------------------------------------------
 -- ENABLE ROW LEVEL SECURITY (RLS) ON ALL TABLES
--- Guarantees total data privacy across multi-user deployments.
 -- ---------------------------------------------------------------------
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.goals ENABLE ROW LEVEL SECURITY;
@@ -300,51 +297,29 @@ ALTER TABLE public.mistakes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.backlog_items ENABLE ROW LEVEL SECURITY;
 
 -- ---------------------------------------------------------------------
--- CREATE STRICT RLS POLICIES (FOR SELECT, INSERT, UPDATE, DELETE)
+-- RLS POLICIES FOR SECURE USER ACCESS
 -- ---------------------------------------------------------------------
 
--- Profiles
-CREATE POLICY "Users can view own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);
-CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
-CREATE POLICY "Users can insert own profile" ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
+-- Profiles: Allow viewing any username (for lookup & unique check), editing own profile
+CREATE POLICY "Public profile username check" ON public.profiles FOR SELECT USING (true);
+CREATE POLICY "Users update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
+CREATE POLICY "Users insert own profile" ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
 
--- Goals
+-- Goal & User Data Tables (strictly private per user)
 CREATE POLICY "Users access own goals" ON public.goals FOR ALL USING (auth.uid() = user_id);
-
--- Milestones
 CREATE POLICY "Users access own milestones" ON public.milestones FOR ALL USING (auth.uid() = user_id);
-
--- Weekly Targets
 CREATE POLICY "Users access own weekly targets" ON public.weekly_targets FOR ALL USING (auth.uid() = user_id);
-
--- Tasks
 CREATE POLICY "Users access own tasks" ON public.tasks FOR ALL USING (auth.uid() = user_id);
-
--- Study Sessions
 CREATE POLICY "Users access own sessions" ON public.study_sessions FOR ALL USING (auth.uid() = user_id);
-
--- Daily Scores
 CREATE POLICY "Users access own daily scores" ON public.daily_scores FOR ALL USING (auth.uid() = user_id);
-
--- Streaks
 CREATE POLICY "Users access own streaks" ON public.streaks FOR ALL USING (auth.uid() = user_id);
-
--- Reviews
 CREATE POLICY "Users access own reviews" ON public.reviews FOR ALL USING (auth.uid() = user_id);
-
--- JEE Chapters
 CREATE POLICY "Users access own jee chapters" ON public.jee_chapters FOR ALL USING (auth.uid() = user_id);
-
--- Mock Tests
 CREATE POLICY "Users access own mock tests" ON public.mock_tests FOR ALL USING (auth.uid() = user_id);
-
--- Mistakes
 CREATE POLICY "Users access own mistakes" ON public.mistakes FOR ALL USING (auth.uid() = user_id);
-
--- Backlog Items
 CREATE POLICY "Users access own backlog items" ON public.backlog_items FOR ALL USING (auth.uid() = user_id);
 
 -- =====================================================================
 -- SCHEMA INITIALIZATION COMPLETE
--- All 13 tables, indexes, automatic triggers, & RLS policies created.
+-- Direct Username + Name + Password authentication ready!
 -- =====================================================================

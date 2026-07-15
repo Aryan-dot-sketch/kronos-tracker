@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { istDateText, istParts, todayId } from '@/lib/time/ist';
 import { ViewType } from '@/types';
-import { Plus, Edit3, Sun, Moon } from 'lucide-react';
+import { Plus, Edit3, Sun, Moon, User } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 const VIEW_TITLES: Record<ViewType, [string, string]> = {
@@ -11,7 +11,7 @@ const VIEW_TITLES: Record<ViewType, [string, string]> = {
   goal: ['Main Target Architecture', 'Main Goal'],
   calendar: ['Consistency Over Time', 'Calendar'],
   analytics: ['Performance Intelligence', 'Analytics'],
-  jee: ['Exam Preparation Mode', 'JEE Tracker'],
+  jee: ['Syllabus & Module Mastery', 'Syllabus Tracker'],
   review: ['Night Reflection System', 'Daily Review'],
   settings: ['Kronos Control Room', 'Settings']
 };
@@ -38,6 +38,11 @@ export const Topbar: React.FC = () => {
       </div>
 
       <div className="top-actions">
+        <Button variant="chip" onClick={() => openModal('auth')}>
+          <User size={15} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
+          {state.settings.name || 'Account'}
+        </Button>
+
         <Button variant="ghost" onClick={() => openModal('goal')}>
           <Edit3 size={15} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
           Edit Goal
