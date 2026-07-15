@@ -4,6 +4,7 @@ import { exportJSON, exportTasksCSV, exportMocksCSV } from '@/lib/storage/export
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Palette, Download, Trash2 } from 'lucide-react';
+import { ThemeSwitcher } from '../ui/ThemeSwitcher';
 
 export const SettingsForm: React.FC = () => {
   const { state, saveSettings, saveGoal, openModal } = useKronos();
@@ -45,13 +46,10 @@ export const SettingsForm: React.FC = () => {
 
             <label>
               App Visual Theme Preset
-              <select value={theme} onChange={e => setTheme(e.target.value as any)}>
-                <option value="light">Classic Warm Ivory & Gold</option>
-                <option value="dark">Obsidian Jet Black & Metallic Gold</option>
-                <option value="midnight">Cyber Midnight Slate & Electric Indigo</option>
-                <option value="emerald">Royal Emerald Forest & Warm Amber</option>
-                <option value="titanium">Architectural Titanium & Cobalt Blue</option>
-              </select>
+              <div className="mt-1">
+                <ThemeSwitcher compact={false} />
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Click any theme for instant preview across the entire app</p>
             </label>
           </div>
 

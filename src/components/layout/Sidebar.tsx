@@ -3,6 +3,7 @@ import { useKronos } from '@/context/KronosContext';
 import { ViewType } from '@/types';
 import { LayoutDashboard, CheckSquare, Target, Calendar, BarChart3, BookOpen, Sparkles, Settings } from 'lucide-react';
 import clsx from 'clsx';
+import { Logo } from '@/components/ui/Logo';
 
 const NAV_ITEMS: { id: ViewType; label: string; icon: React.ComponentType<{ size?: number | string }> }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -21,19 +22,7 @@ export const Sidebar: React.FC = () => {
   return (
     <aside className="sidebar" aria-label="Primary navigation">
       <div className="brand-block">
-        <div className="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" role="img">
-            <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" strokeWidth="2.5" />
-            <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" />
-            <path d="M32 14v18l11 7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            <circle cx="32" cy="32" r="3" fill="currentColor" />
-            <path d="M20 48c4 2.5 8 3.5 12 3.5s8-1 12-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-          </svg>
-        </div>
-        <div className="brand-text">
-          <p className="brand-kicker">Command Center</p>
-          <h2>Kronos</h2>
-        </div>
+        <Logo size={42} showWordmark={true} />
       </div>
 
       <nav className="nav-list" aria-label="Main Navigation">

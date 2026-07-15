@@ -1,0 +1,27 @@
+{
+  "name": "Kronos Tracker",
+  "short_name": "Kronos",
+  "description": "Premium IST-based goal, streak, checklist, timer and performance command center. Command your time. Compound your streak.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F1E8",
+  "theme_color": "#B88A44",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

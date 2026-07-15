@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { istDateText, istParts, todayId } from '@/lib/time/ist';
 import { ViewType } from '@/types';
-import { Plus, Edit3, Sun, Moon, User } from 'lucide-react';
+import { Plus, Edit3, User, Palette } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { ThemeSwitcher } from '../ui/ThemeSwitcher';
 
 const VIEW_TITLES: Record<ViewType, [string, string]> = {
   dashboard: ['Premium Daily Execution', 'Dashboard'],
@@ -28,7 +29,6 @@ export const Topbar: React.FC = () => {
   }, []);
 
   const [eyebrow, title] = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
-  const isDark = state.ui.theme === 'dark';
 
   return (
     <header className="topbar">
@@ -53,14 +53,11 @@ export const Topbar: React.FC = () => {
           Add Task
         </Button>
 
-        <button
-          className="icon-toggle"
-          onClick={toggleTheme}
-          title="Toggle Theme (Light / Dark)"
-          aria-label="Toggle theme"
-        >
-          {isDark ? <Sun size={18} className="theme-icon-sun" /> : <Moon size={18} />}
-        </button>
+        {/* Premium Theme Switcher */}
+        <div className="flex items-center gap-2 pl-1 border-l border-[var(--border-line)]">
+          <Palette size={15} className="text-[var(--text-muted)]" />
+          <ThemeSwitcher compact={true} />
+        </div>
 
         <div className="ist-pill" aria-live="polite">
           <span>{istDateText()} • Day {todayId()}</span>
