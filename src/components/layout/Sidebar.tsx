@@ -4,7 +4,7 @@ import { ViewType } from '@/types';
 import { LayoutDashboard, CheckSquare, Target, Calendar, BarChart3, BookOpen, Sparkles, Settings } from 'lucide-react';
 import clsx from 'clsx';
 
-const NAV_ITEMS: { id: ViewType; label: string; icon: React.FC<{ size?: number }> }[] = [
+const NAV_ITEMS: { id: ViewType; label: string; icon: React.ComponentType<{ size?: number | string }> }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'today', label: 'Today', icon: CheckSquare },
   { id: 'goal', label: 'Main Goal', icon: Target },
