@@ -1,5 +1,7 @@
 export type ViewType = 'dashboard' | 'today' | 'goal' | 'calendar' | 'analytics' | 'jee' | 'review' | 'settings';
 
+export type ThemeType = 'light' | 'dark' | 'midnight' | 'emerald' | 'titanium';
+
 export type TaskPriority = 'critical' | 'high' | 'medium' | 'low';
 export type TaskDifficulty = 'Easy' | 'Medium' | 'Hard' | 'Extreme';
 export type TaskStatus = 'not-started' | 'completed' | 'missed' | 'skipped';
@@ -46,7 +48,7 @@ export interface Goal {
   weakArea: string;
   riskLevel: 'On Track' | 'Medium' | 'High Risk';
   prepStrategy: string;
-  subjects: string[]; // 100% fully customizable array of subjects/modules!
+  subjects: string[];
   milestones: Milestone[];
   weeklyTargets: WeeklyTarget[];
 }
@@ -152,7 +154,7 @@ export interface AppState {
   version: number;
   ui: {
     activeView: ViewType;
-    theme: 'light' | 'dark';
+    theme: ThemeType;
     taskStatusFilter: string;
     taskPriorityFilter: string;
     calendarMonthOffset: number;

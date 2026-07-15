@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { AppState, ViewType, Task, Goal, JEEChapter, MockTest, Mistake, DailyReview } from '@/types';
+import { AppState, ViewType, ThemeType, Task, Goal, JEEChapter, MockTest, Mistake, DailyReview } from '@/types';
 import { loadState, saveState, cleanState, uid, makeTask, normalizeState, KEY } from '../lib/storage/local-storage';
 import { todayId, addDays } from '../lib/time/ist';
 import { calculateDailyStats, calculateSubjectMinutes } from '../lib/scoring/scoring-engine';
@@ -32,6 +32,7 @@ interface KronosContextType {
 
   // Actions
   toggleTheme: () => void;
+  setTheme: (theme: ThemeType) => void;
   toggleTask: (taskId: string) => void;
   deleteTask: (taskId: string) => void;
   saveTask: (taskData: Partial<Task>, editId?: string | null) => void;
@@ -62,7 +63,7 @@ interface KronosContextType {
 
   // Review & Settings
   saveDailyReview: (reviewData: Partial<DailyReview>) => void;
-  saveSettings: (settingsData: Partial<AppState['settings']>, theme: 'light' | 'dark') => void;
+  saveSettings: (settingsData: Partial<AppState['settings']>, theme: ThemeType) => void;
   importJSONState: (jsonStr: string) => boolean;
   clearStateData: () => void;
 
@@ -139,11 +140,27 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setEditingTaskId(null);
   };
 
+  const THEMES: ThemeType[] = ['light', 'dark', 'midnight', 'emerald', 'titanium'];
+
   const toggleTheme = () => {
+    updateState(prev => {
+      const current = prev.ui.theme || 'light';
+      const nextIndex = (THEMES.indexOf(current) + 1) % THEMES.length;
+      const nextTheme = THEMES[nextIndex];
+      showToast(`Switched to ${nextTheme.toUpperCase()} theme`);
+      return {
+        ...prev,
+        ui: { ...prev.ui, theme: nextTheme }
+      };
+    });
+  };
+
+  const setTheme = (theme: ThemeType) => {
     updateState(prev => ({
       ...prev,
-      ui: { ...prev.ui, theme: prev.ui.theme === 'dark' ? 'light' : 'dark' }
+      ui: { ...prev.ui, theme }
     }));
+    showToast(`Theme updated to ${theme}`);
   };
 
   const toggleTask = (taskId: string) => {
@@ -469,7 +486,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast('Night review saved in IST');
   };
 
-  const saveSettings = (settingsData: Partial<AppState['settings']>, theme: 'light' | 'dark') => {
+  const saveSettings = (settingsData: Partial<AppState['settings']>, theme: ThemeType) => {
     updateState(prev => ({
       ...prev,
       settings: { ...prev.settings, ...settingsData },
@@ -596,6 +613,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         selectedDayDetail,
         editingTaskId,
         toggleTheme,
+        setTheme,
         toggleTask,
         deleteTask,
         saveTask,
