@@ -11,7 +11,11 @@ const MISTAKE_TYPES = [
 export const MistakeNotebook: React.FC = () => {
   const { state, addMistake, deleteMistake } = useKronos();
 
-  const [subject, setSubject] = useState('Physics');
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
+  const [subject, setSubject] = useState(subjects[0] || 'General');
   const [chapter, setChapter] = useState('');
   const [type, setType] = useState('Concept error');
   const [note, setNote] = useState('');
@@ -39,15 +43,16 @@ export const MistakeNotebook: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="mock-form">
         <div className="form-grid three">
-          <label>Subject
+          <label>Subject / Module
             <select value={subject} onChange={e => setSubject(e.target.value)}>
-              <option>Physics</option>
-              <option>Chemistry</option>
-              <option>Mathematics</option>
+              {subjects.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+              <option value="General">General</option>
             </select>
           </label>
-          <label>Chapter Name
-            <input value={chapter} onChange={e => setChapter(e.target.value)} placeholder="Electrostatics" required />
+          <label>Chapter / Topic Name
+            <input value={chapter} onChange={e => setChapter(e.target.value)} placeholder="Topic name" required />
           </label>
           <label>Error Type
             <select value={type} onChange={e => setType(e.target.value)}>

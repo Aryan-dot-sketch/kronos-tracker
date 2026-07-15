@@ -1,4 +1,4 @@
-import { Task, TaskPriority, AppState } from '@/types';
+import { AppState, TaskPriority } from '@/types';
 import { todayId } from '../time/ist';
 
 export const WEIGHT: Record<TaskPriority, number> = {
@@ -8,19 +8,22 @@ export const WEIGHT: Record<TaskPriority, number> = {
   low: 1
 };
 
-export function calculateSubjectMinutes(state: AppState, dateId = todayId()) {
-  const totals = { Physics: 0, Chemistry: 0, Mathematics: 0 };
+export function calculateSubjectMinutes(state: AppState, dateId = todayId()): Record<string, number> {
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
+  const totals: Record<string, number> = Object.fromEntries(subjects.map(s => [s, 0]));
+
   const tasks = state.tasksByDate[dateId] || [];
   tasks.filter(t => t.status === 'completed').forEach(t => {
-    if (totals[t.subject as keyof typeof totals] != null) {
-      totals[t.subject as keyof typeof totals] += Number(t.estimate) || 0;
-    }
+    totals[t.subject] = (totals[t.subject] || 0) + (Number(t.estimate) || 0);
   });
+
   state.sessions.filter(s => s.dateId === dateId).forEach(s => {
-    if (totals[s.subject as keyof typeof totals] != null) {
-      totals[s.subject as keyof typeof totals] += Number(s.minutes) || 0;
-    }
+    totals[s.subject] = (totals[s.subject] || 0) + (Number(s.minutes) || 0);
   });
+
   return totals;
 }
 

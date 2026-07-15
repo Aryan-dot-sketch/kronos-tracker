@@ -4,7 +4,7 @@ import { CompletionChart } from '@/components/charts/CompletionChart';
 import { SubjectBalanceChart } from '@/components/charts/SubjectBalanceChart';
 import { HeatmapGrid } from '@/components/charts/HeatmapGrid';
 import { AnalyticsSummary } from '@/components/analytics/AnalyticsSummary';
-import { calculateSubjectBalance } from '@/lib/streaks/streak-engine';
+import { AIPoweredPlanner } from '@/components/analytics/AIPoweredPlanner';
 import { formatMinutes, addDays, todayId, dateLabel } from '@/lib/time/ist';
 
 export const AnalyticsPage: React.FC = () => {
@@ -27,6 +27,8 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       <div className="content-grid">
+        <AIPoweredPlanner />
+
         <section className="panel wide">
           <div className="panel-header">
             <div>
@@ -64,7 +66,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="panel-header">
             <div>
               <h3>Subject Balance</h3>
-              <p className="panel-subtitle">Balanced PCM distribution protects rank performance.</p>
+              <p className="panel-subtitle">Balanced module distribution protects rank performance.</p>
             </div>
           </div>
           <SubjectBalanceChart />

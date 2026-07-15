@@ -46,6 +46,7 @@ export interface Goal {
   weakArea: string;
   riskLevel: 'On Track' | 'Medium' | 'High Risk';
   prepStrategy: string;
+  subjects: string[]; // 100% fully customizable array of subjects/modules!
   milestones: Milestone[];
   weeklyTargets: WeeklyTarget[];
 }
@@ -76,12 +77,7 @@ export interface DailyHistory {
   completedTasks: number;
   totalTasks: number;
   success: boolean;
-  subjectMinutes: {
-    Physics: number;
-    Chemistry: number;
-    Mathematics: number;
-    [key: string]: number;
-  };
+  subjectMinutes: Record<string, number>;
 }
 
 export interface MockTest {
@@ -91,6 +87,7 @@ export interface MockTest {
   physics: number;
   chemistry: number;
   math: number;
+  subjectScores?: Record<string, number>;
   attempted: number;
   correct: number;
   wrong: number;
@@ -111,6 +108,7 @@ export interface Mistake {
 }
 
 export interface JEEChapter {
+  id?: string;
   subject: string;
   chapter: string;
   status: string;

@@ -4,15 +4,19 @@ import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 
 export const ChapterModal: React.FC = () => {
-  const { activeModal, closeModal, addChapter } = useKronos();
+  const { state, activeModal, closeModal, addChapter } = useKronos();
 
-  const [subject, setSubject] = useState('Physics');
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
+  const [subject, setSubject] = useState(subjects[0] || 'General');
   const [chapter, setChapter] = useState('');
-  const [theory, setTheory] = useState(50);
-  const [practice, setPractice] = useState(20);
-  const [pyq, setPyq] = useState(10);
-  const [revision, setRevision] = useState('R1');
-  const [strength, setStrength] = useState('Medium');
+  const [theory, setTheory] = useState(0);
+  const [practice, setPractice] = useState(0);
+  const [pyq, setPyq] = useState(0);
+  const [revision, setRevision] = useState('R0');
+  const [strength, setStrength] = useState('Weak');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,21 +29,21 @@ export const ChapterModal: React.FC = () => {
       isOpen={activeModal === 'chapter'}
       onClose={closeModal}
       eyebrow="Syllabus Expansion"
-      title="Add Chapter to Tracker"
+      title="Add Chapter / Module to Tracker"
     >
       <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
         <div className="form-grid two">
           <label>
-            Subject
+            Subject / Domain Module
             <select value={subject} onChange={e => setSubject(e.target.value)}>
-              <option>Physics</option>
-              <option>Chemistry</option>
-              <option>Mathematics</option>
+              {subjects.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
             </select>
           </label>
           <label>
-            Chapter Name
-            <input value={chapter} onChange={e => setChapter(e.target.value)} placeholder="Rotational Motion" required />
+            Chapter / Topic Name
+            <input value={chapter} onChange={e => setChapter(e.target.value)} placeholder="e.g. Rotational Motion / Indian Polity / System Design" required />
           </label>
         </div>
 
@@ -53,7 +57,7 @@ export const ChapterModal: React.FC = () => {
             <input type="number" min="0" max="100" value={practice} onChange={e => setPractice(Number(e.target.value))} required />
           </label>
           <label>
-            PYQ %
+            PYQ / Problem Set %
             <input type="number" min="0" max="100" value={pyq} onChange={e => setPyq(Number(e.target.value))} required />
           </label>
         </div>
@@ -84,7 +88,7 @@ export const ChapterModal: React.FC = () => {
 
         <div className="modal-actions">
           <Button variant="ghost" type="button" onClick={closeModal}>Cancel</Button>
-          <Button variant="primary" type="submit">Add Chapter</Button>
+          <Button variant="primary" type="submit">Add Module / Chapter</Button>
         </div>
       </form>
     </Modal>

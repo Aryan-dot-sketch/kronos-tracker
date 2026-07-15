@@ -10,7 +10,7 @@ const NAV_ITEMS: { id: ViewType; label: string; icon: React.ComponentType<{ size
   { id: 'goal', label: 'Main Goal', icon: Target },
   { id: 'calendar', label: 'Calendar', icon: Calendar },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-  { id: 'jee', label: 'JEE Tracker', icon: BookOpen },
+  { id: 'jee', label: 'Syllabus Tracker', icon: BookOpen },
   { id: 'review', label: 'Review', icon: Sparkles },
   { id: 'settings', label: 'Settings', icon: Settings }
 ];

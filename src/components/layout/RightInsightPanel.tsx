@@ -17,6 +17,10 @@ export const RightInsightPanel: React.FC = () => {
     setTimerSubject
   } = useKronos();
 
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
   const [resetMs, setResetMs] = useState(() => nextISTResetMs() - Date.now());
   const [clockText, setClockText] = useState(() => istParts().timeText.replace(' IST', ''));
   const [left, setLeft] = useState(() => deadlineLeft(state.goal.deadlineISO));
@@ -40,14 +44,12 @@ export const RightInsightPanel: React.FC = () => {
   return (
     <aside className="insight-panel" aria-label="Kronos time and insights">
       <div className="side-stack">
-        {/* Kronos Live Clock */}
         <section className="kronos-clock">
           <p className="eyebrow" style={{ color: 'rgba(255,248,234,0.75)' }}>Live IST Clock</p>
           <div className="clock-time">{clockText}</div>
           <div className="clock-date">{istDateText()} • IST</div>
         </section>
 
-        {/* Day Close Countdown */}
         <section className="side-card">
           <h3>Today Closes In</h3>
           <div className="side-number">{formatDuration(resetMs, true)}</div>
@@ -56,17 +58,17 @@ export const RightInsightPanel: React.FC = () => {
           </p>
         </section>
 
-        {/* Stopwatch & Pomodoro Timer */}
         <section className="side-card">
           <h3>Stopwatch & Pomodoro Timer</h3>
           <label style={{ marginBottom: '8px' }}>
-            Subject Focus
+            Subject / Module Focus
             <select value={focusTimer.subject} onChange={e => setTimerSubject(e.target.value)}>
-              <option>Physics</option>
-              <option>Chemistry</option>
-              <option>Mathematics</option>
-              <option>Revision</option>
-              <option>Mock Test</option>
+              {subjects.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+              <option value="Revision">Revision</option>
+              <option value="Mock Test">Mock Test</option>
+              <option value="General">General</option>
             </select>
           </label>
 
@@ -91,9 +93,8 @@ export const RightInsightPanel: React.FC = () => {
           </div>
         </section>
 
-        {/* Target Exam Countdown */}
         <section className="side-card">
-          <h3>Exam Target Countdown</h3>
+          <h3>Target Deadline Countdown</h3>
           <div className="countdown-stack">
             <div className="count-box"><strong>{left.days}</strong><span>Days</span></div>
             <div className="count-box"><strong>{left.hours}</strong><span>Hours</span></div>
@@ -104,7 +105,6 @@ export const RightInsightPanel: React.FC = () => {
           </div>
         </section>
 
-        {/* Streaks Snapshot */}
         <section className="side-card">
           <h3>Streaks & Performance</h3>
           <div className="countdown-stack">
@@ -114,7 +114,6 @@ export const RightInsightPanel: React.FC = () => {
           </div>
         </section>
 
-        {/* Daily Coaching Insight */}
         <section className="side-card">
           <h3>Daily Coaching Insight</h3>
           <p className="panel-subtitle">

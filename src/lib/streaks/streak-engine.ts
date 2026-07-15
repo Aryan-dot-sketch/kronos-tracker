@@ -30,7 +30,7 @@ export function calculateStreaks(state: AppState) {
 export function calculateSubjectStreak(state: AppState, subject: string) {
   let pointer = todayId();
   let count = 0;
-  while ((state.history[pointer]?.subjectMinutes?.[subject] || calculateSubjectMinutes(state, pointer)[subject as 'Physics' | 'Chemistry' | 'Mathematics'] || 0) > 0) {
+  while ((state.history[pointer]?.subjectMinutes?.[subject] || calculateSubjectMinutes(state, pointer)[subject] || 0) > 0) {
     count += 1;
     pointer = addDays(pointer, -1);
   }
@@ -38,16 +38,22 @@ export function calculateSubjectStreak(state: AppState, subject: string) {
 }
 
 export function calculateSubjectBalance(state: AppState, days = 7) {
-  const totals = { Physics: 0, Chemistry: 0, Mathematics: 0 };
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
+  const totals: Record<string, number> = Object.fromEntries(subjects.map(s => [s, 0]));
+
   for (let i = days - 1; i >= 0; i--) {
     const dateId = addDays(todayId(), -i);
     const minutes = state.history[dateId]?.subjectMinutes || calculateSubjectMinutes(state, dateId);
-    Object.keys(totals).forEach(subject => {
-      const key = subject as keyof typeof totals;
-      totals[key] += Number(minutes[key]) || 0;
+    subjects.forEach(subject => {
+      totals[subject] = (totals[subject] || 0) + (Number(minutes[subject]) || 0);
     });
   }
+
   const total = Object.values(totals).reduce((sum, value) => sum + value, 0) || 1;
+
   return Object.fromEntries(
     Object.entries(totals).map(([subject, minutes]) => [
       subject,

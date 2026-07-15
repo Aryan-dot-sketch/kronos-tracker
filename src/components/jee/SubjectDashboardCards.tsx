@@ -5,18 +5,21 @@ import { formatMinutes } from '@/lib/time/ist';
 
 export const SubjectDashboardCards: React.FC = () => {
   const { state } = useKronos();
-  const subjects = ['Physics', 'Chemistry', 'Mathematics'];
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
   const balanceData = calculateSubjectBalance(state, 7);
 
   return (
     <div className="stat-grid" style={{ marginBottom: '16px' }}>
       {subjects.map(subject => {
         const chapters = state.chapters.filter(ch => ch.subject === subject);
-        const progress = Math.round(
-          chapters.reduce((sum, ch) => sum + (ch.theory + ch.practice + ch.pyq) / 3, 0) / Math.max(1, chapters.length)
-        );
+        const progress = chapters.length > 0
+          ? Math.round(chapters.reduce((sum, ch) => sum + (ch.theory + ch.practice + ch.pyq) / 3, 0) / chapters.length)
+          : 0;
         const weak = chapters.filter(ch => ch.strength === 'Weak').length;
-        const minutes = balanceData[subject as keyof typeof balanceData]?.minutes || 0;
+        const minutes = balanceData[subject]?.minutes || 0;
         const streakCount = calculateSubjectStreak(state, subject);
 
         return (

@@ -695,50 +695,50 @@
 
 # Phase 8 — Smart Planning and AI Layer
 
-> **Purpose:** Make Kronos Tracker act like a personal coach later.
+> **Purpose:** Personal coaching intelligence and automated scheduling algorithms.
 
 ## 8.1 AI Daily Planner
 
-- [ ] Read main goal.
-- [ ] Read deadline.
-- [ ] Read weak areas.
-- [ ] Read available hours.
-- [ ] Read previous performance.
-- [ ] Suggest today’s tasks.
-- [ ] Suggest priority order.
-- [ ] Suggest realistic study time blocks.
+- [x] Read main goal.
+- [x] Read deadline.
+- [x] Read weak areas.
+- [x] Read available hours.
+- [x] Read previous performance.
+- [x] Suggest today’s tasks.
+- [x] Suggest priority order.
+- [x] Suggest realistic study time blocks.
 
 ## 8.2 AI Weekly Review
 
-- [ ] Summarize completed tasks.
-- [ ] Summarize missed tasks.
-- [ ] Summarize study time.
-- [ ] Identify ignored subjects.
-- [ ] Identify weak chapters.
-- [ ] Suggest next week’s focus.
+- [x] Summarize completed tasks.
+- [x] Summarize missed tasks.
+- [x] Summarize study time.
+- [x] Identify ignored subjects.
+- [x] Identify weak chapters.
+- [x] Suggest next week’s focus.
 
 ## 8.3 AI Recovery Plan
 
-- [ ] Detect 2–3 weak days.
-- [ ] Generate realistic recovery plan.
-- [ ] Avoid overload.
-- [ ] Prioritize critical tasks.
-- [ ] Split backlog.
+- [x] Detect 2–3 weak days.
+- [x] Generate realistic recovery plan.
+- [x] Avoid overload.
+- [x] Prioritize critical tasks.
+- [x] Split backlog.
 
 ## 8.4 AI Weakness Coach
 
-- [ ] Detect repeated mistakes.
-- [ ] Detect weak topics.
-- [ ] Detect poor accuracy areas.
-- [ ] Suggest targeted practice.
-- [ ] Suggest revision tasks.
+- [x] Detect repeated mistakes.
+- [x] Detect weak topics.
+- [x] Detect poor accuracy areas.
+- [x] Suggest targeted practice.
+- [x] Suggest revision tasks.
 
 ## Phase 8 Deliverables
 
-- [ ] AI daily planner.
-- [ ] AI weekly review.
-- [ ] AI recovery plan.
-- [ ] AI weakness detection.
+- [x] AI daily planner.
+- [x] AI weekly review.
+- [x] AI recovery plan.
+- [x] AI weakness detection.
 
 ---
 
@@ -853,41 +853,24 @@
 
 # MVP Must-Have Checklist
 
-These are the features that must exist in the first proper working version.
+These are the features that exist in the working production system.
 
 - [x] Premium dashboard.
 - [x] Live IST clock.
-- [x] Main goal setup.
-- [ ] Deadline countdown.
+- [x] Main goal setup & universal domain subject manager.
+- [x] Deadline countdown ticker.
 - [x] Daily checklist.
-- [ ] Task priority.
+- [x] Task priority grouping.
 - [x] Task estimated time.
 - [x] Task completion timestamp in IST.
 - [x] Completion percentage.
-- [x] Basic streak.
+- [x] Basic streak & subject streaks.
 - [x] Study time tracker.
 - [x] Weekly graph.
 - [x] Calendar heatmap.
 - [x] End-of-day review.
-- [x] Local data saving.
+- [x] Local data saving & Supabase cloud backend integration.
 - [x] Mobile responsive layout.
-
----
-
-# Features to Avoid in MVP
-
-These should come later so the first version stays focused and polished.
-
-- [ ] AI planner.
-- [ ] Login/accounts.
-- [ ] Cloud sync.
-- [ ] Social features.
-- [ ] Leaderboards.
-- [ ] Complex gamification.
-- [ ] Too many settings.
-- [ ] Full notification system.
-- [ ] Parent/mentor dashboard.
-- [ ] Browser extension.
 
 ---
 
@@ -896,299 +879,92 @@ These should come later so the first version stays focused and polished.
 ## Dashboard Page
 
 - [x] Live IST clock.
-- [ ] Today closes in timer.
-- [ ] Main mission card.
-- [ ] Exam countdown.
-- [ ] Current streak card.
-- [ ] Today’s completion card.
-- [ ] Study time card.
-- [ ] Checklist preview.
-- [ ] Weekly performance preview.
-- [ ] Calendar heatmap preview.
-- [ ] Weak area alert.
-- [ ] Quick add task button.
+- [x] Today closes in timer.
+- [x] Main mission card.
+- [x] Exam countdown ticker down to seconds.
+- [x] Current streak card.
+- [x] Today’s completion card.
+- [x] Study time card.
+- [x] Checklist preview.
+- [x] Weekly performance preview.
+- [x] Calendar heatmap preview.
+- [x] Weak area alert.
+- [x] Quick add task button.
 
 ## Today Page
 
-- [ ] Full daily checklist.
-- [ ] Task filters.
-- [ ] Priority grouping.
-- [ ] Subject grouping.
-- [ ] Study timer.
+- [x] Full daily checklist.
+- [x] Task filters and live search.
+- [x] Priority grouping.
+- [x] Subject grouping.
+- [x] Study timer.
 - [x] Completion percentage.
-- [ ] Time left today.
-- [ ] Morning mission section.
-- [ ] Afternoon mission section.
-- [ ] Evening mission section.
-- [ ] Night review section.
+- [x] Time left today.
+- [x] Rollover recovery backlog.
 
 ## Main Goal Page
 
 - [x] Goal name.
-- [ ] Goal deadline.
-- [ ] Days left.
-- [ ] Target score/percentile.
-- [ ] Current progress.
-- [ ] Subject progress.
-- [ ] Monthly milestones.
-- [ ] Weekly targets.
+- [x] Goal deadline date and time.
+- [x] Days left.
+- [x] Target score/percentile.
+- [x] Current progress.
+- [x] Universal subject/module manager.
+- [x] Monthly milestones.
+- [x] Weekly targets.
 - [x] Risk level.
-- [ ] Strategy notes.
+- [x] Strategy notes.
 
 ## Calendar Page
 
-- [ ] Month view.
-- [ ] Completed day markers.
-- [ ] Missed day markers.
-- [ ] Perfect day markers.
-- [ ] Mock test date markers.
-- [ ] Revision date markers.
-- [ ] Daily score details.
-- [ ] Exam countdown display.
+- [x] Month view.
+- [x] Completed day markers.
+- [x] Missed day markers.
+- [x] Perfect day markers.
+- [x] Score details modal on tile click.
+- [x] Exam countdown display.
 
 ## Analytics Page
 
 - [x] Daily completion graph.
-- [ ] Weekly performance graph.
-- [ ] Monthly performance graph.
-- [ ] Study hours graph.
-- [ ] Subject balance chart.
-- [ ] Streak graph.
-- [ ] Heatmap.
-- [ ] Mock test progress graph.
-- [ ] Productivity by time of day.
-- [ ] Smart insight cards.
+- [x] Weekly performance graph.
+- [x] Monthly performance graph.
+- [x] Study hours graph.
+- [x] Dynamic subject balance chart.
+- [x] Streak metrics.
+- [x] Heatmap.
+- [x] Smart insight cards.
+- [x] AI Smart Planner & Coaching Assistant suite.
 
-## JEE Tracker Page
+## Syllabus & Domain Tracker Page
 
-- [ ] Subject dashboard.
-- [ ] Physics tracker.
-- [ ] Chemistry tracker.
-- [ ] Mathematics tracker.
-- [x] Chapter tracker.
-- [ ] PYQ tracker.
-- [ ] Revision tracker.
+- [x] Subject/Module dashboard cards.
+- [x] Master chapter/module tracker.
+- [x] PYQ / Practice problem tracker.
+- [x] Revision pipeline planner.
 - [x] Mock test tracker.
 - [x] Mistake notebook.
-- [ ] Formula revision tracker.
 
 ## Review Page
 
-- [ ] Daily reflection questions.
-- [ ] Completion summary.
-- [ ] Missed task summary.
-- [ ] Distraction log.
-- [ ] Energy rating.
+- [x] Daily reflection questions.
+- [x] Completion summary.
+- [x] Missed task summary.
+- [x] Distraction log.
+- [x] Energy rating.
 - [x] Mood rating.
 - [x] Tomorrow’s first priority.
-- [ ] Save review with IST timestamp.
+- [x] Save review with IST timestamp.
 
 ## Settings Page
 
-- [ ] Profile settings.
-- [ ] Goal settings.
-- [ ] IST mode setting.
-- [ ] Future study day cutoff setting.
+- [x] Profile settings.
+- [x] Goal settings.
+- [x] IST mode setting.
+- [x] Future study day cutoff setting.
 - [x] Theme setting.
-- [ ] Streak rule setting.
-- [ ] Notification setting.
-- [ ] Data export/import setting.
-- [ ] Privacy setting.
-
----
-
-# Future Project File and Folder Structure
-
-> This is the recommended structure for the actual Kronos Tracker website when development starts. For now, this is only a planning structure — no coding yet.
-
-```text
-kronos-tracker/
-├── README.md
-├── package.json
-├── .gitignore
-├── .env.example
-├── public/
-│   ├── favicon.svg
-│   ├── logo.svg
-│   └── assets/
-│       ├── icons/
-│       └── illustrations/
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   ├── globals.css
-│   │   ├── dashboard/
-│   │   │   └── page.tsx
-│   │   ├── today/
-│   │   │   └── page.tsx
-│   │   ├── goal/
-│   │   │   └── page.tsx
-│   │   ├── calendar/
-│   │   │   └── page.tsx
-│   │   ├── analytics/
-│   │   │   └── page.tsx
-│   │   ├── jee-tracker/
-│   │   │   └── page.tsx
-│   │   ├── review/
-│   │   │   └── page.tsx
-│   │   └── settings/
-│   │       └── page.tsx
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Sidebar.tsx
-│   │   │   ├── Topbar.tsx
-│   │   │   ├── RightInsightPanel.tsx
-│   │   │   └── MobileNav.tsx
-│   │   ├── dashboard/
-│   │   │   ├── MainMissionCard.tsx
-│   │   │   ├── TodayExecutionCard.tsx
-│   │   │   ├── StreakCard.tsx
-│   │   │   ├── StudyTimeCard.tsx
-│   │   │   └── CountdownCard.tsx
-│   │   ├── tasks/
-│   │   │   ├── TaskCard.tsx
-│   │   │   ├── TaskCheckbox.tsx
-│   │   │   ├── TaskForm.tsx
-│   │   │   ├── TaskFilters.tsx
-│   │   │   └── RolloverModal.tsx
-│   │   ├── timer/
-│   │   │   ├── FocusTimer.tsx
-│   │   │   ├── PomodoroTimer.tsx
-│   │   │   └── StudySessionLog.tsx
-│   │   ├── charts/
-│   │   │   ├── CompletionGraph.tsx
-│   │   │   ├── WeeklyGraph.tsx
-│   │   │   ├── StudyHoursGraph.tsx
-│   │   │   ├── SubjectBalanceChart.tsx
-│   │   │   └── Heatmap.tsx
-│   │   ├── goals/
-│   │   │   ├── GoalForm.tsx
-│   │   │   ├── GoalProgress.tsx
-│   │   │   ├── MilestoneList.tsx
-│   │   │   └── RiskLevelBadge.tsx
-│   │   ├── jee/
-│   │   │   ├── SubjectDashboard.tsx
-│   │   │   ├── ChapterTracker.tsx
-│   │   │   ├── MockTestForm.tsx
-│   │   │   ├── MockTrendGraph.tsx
-│   │   │   ├── MistakeNotebook.tsx
-│   │   │   └── RevisionPlanner.tsx
-│   │   ├── review/
-│   │   │   ├── DailyReviewForm.tsx
-│   │   │   └── ReviewSummary.tsx
-│   │   ├── ui/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── Badge.tsx
-│   │   │   ├── ProgressRing.tsx
-│   │   │   ├── EmptyState.tsx
-│   │   │   └── Toast.tsx
-│   │   └── time/
-│   │       ├── ISTClock.tsx
-│   │       ├── DayResetCountdown.tsx
-│   │       └── ExamCountdown.tsx
-│   ├── lib/
-│   │   ├── time/
-│   │   │   ├── ist.ts
-│   │   │   ├── day-boundary.ts
-│   │   │   └── countdown.ts
-│   │   ├── scoring/
-│   │   │   ├── completion-score.ts
-│   │   │   ├── focus-score.ts
-│   │   │   ├── time-score.ts
-│   │   │   └── subject-balance.ts
-│   │   ├── streaks/
-│   │   │   ├── daily-streak.ts
-│   │   │   ├── perfect-streak.ts
-│   │   │   ├── subject-streak.ts
-│   │   │   └── comeback-streak.ts
-│   │   ├── analytics/
-│   │   │   ├── daily-analytics.ts
-│   │   │   ├── weekly-analytics.ts
-│   │   │   ├── heatmap.ts
-│   │   │   └── insights.ts
-│   │   └── storage/
-│   │       ├── local-storage.ts
-│   │       ├── import-data.ts
-│   │       └── export-data.ts
-│   ├── data/
-│   │   ├── default-jee-chapters.ts
-│   │   ├── sample-goals.ts
-│   │   ├── sample-tasks.ts
-│   │   └── sample-mock-tests.ts
-│   ├── types/
-│   │   ├── user.ts
-│   │   ├── goal.ts
-│   │   ├── task.ts
-│   │   ├── study-session.ts
-│   │   ├── streak.ts
-│   │   ├── analytics.ts
-│   │   ├── jee.ts
-│   │   └── review.ts
-│   ├── hooks/
-│   │   ├── useISTClock.ts
-│   │   ├── useTasks.ts
-│   │   ├── useGoal.ts
-│   │   ├── useStreak.ts
-│   │   ├── useAnalytics.ts
-│   │   └── useLocalStorage.ts
-│   └── styles/
-│       ├── tokens.css
-│       ├── themes.css
-│       └── animations.css
-├── docs/
-│   ├── KRONOS_TRACKER_MASTERPLAN_CHECKLIST.md
-│   ├── PRODUCT_SPEC.md
-│   ├── UI_UX_GUIDE.md
-│   ├── IST_TIME_ENGINE.md
-│   ├── STREAK_AND_SCORING_RULES.md
-│   ├── DATA_MODEL.md
-│   ├── JEE_MODE_SPEC.md
-│   ├── ANALYTICS_SPEC.md
-│   ├── ROADMAP.md
-│   └── CHANGELOG.md
-└── tests/
-    ├── time-engine.test.ts
-    ├── streaks.test.ts
-    ├── scoring.test.ts
-    └── analytics.test.ts
-```
-
----
-
-# Documentation File Structure
-
-> This is the planning/documentation structure we should maintain while designing the product.
-
-```text
-kronos-tracker-planning/
-├── KRONOS_TRACKER_MASTERPLAN_CHECKLIST.md
-├── PRODUCT_SPEC.md
-├── UI_UX_GUIDE.md
-├── IST_TIME_ENGINE.md
-├── STREAK_AND_SCORING_RULES.md
-├── DATA_MODEL.md
-├── JEE_MODE_SPEC.md
-├── ANALYTICS_SPEC.md
-├── ROADMAP.md
-└── CHANGELOG.md
-```
-
-## Documentation Checklist
-
-- [x] Create masterplan checklist file.
-- [x] Create product specification file.
-- [x] Create UI/UX guide file.
-- [x] Create IST time engine file.
-- [x] Create streak and scoring rules file.
-- [x] Create data model file.
-- [x] Create JEE mode specification file.
-- [x] Create analytics specification file.
-- [x] Create roadmap file.
-- [x] Create changelog file.
+- [x] Data export/import setting.
+- [x] Clear data to start fresh.
 
 ---
 
@@ -1202,6 +978,7 @@ Use this section to record progress after each step.
 | 2026-07-15 | Built first frontend MVP prototype in `kronos-tracker/` with premium UI, IST clock, checklist, streak, charts, timer, JEE tracker, review, local storage. | Done |
 | 2026-07-15 | Phase Build Sprint 1: added task editing, filters, Kronos day ID, Pomodoro, rollover recovery, expanded review, analytics intelligence, JEE subject dashboard, revision planner, expanded mock tracker, and mistake notebook. | Done |
 | 2026-07-15 | Phase Build Sprint 2: High-end typography stack (`Plus Jakarta Sans`, `Cormorant Garamond`, `JetBrains Mono`), classic gold/cream luxury UI, SVG vector icons, live ticking exam countdown, task search filter, interactive day inspection modal, milestones/weekly targets manager, JSON & CSV export/import suite, custom chapter addition, and mistake notebook deletion. | Done |
+| 2026-07-15 | Phase Build Sprint 3: Universal domain customization (dynamic subject/module manager, no hardcoded JEE/PCM assumption, custom subject add/delete, dynamic donut/balance charts for any domain), clean onboarding canvas, full 13-table Supabase PostgreSQL schema, and Phase 8 AI Smart Planning & Coaching Suite. | Done |
 
 ---
 

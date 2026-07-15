@@ -8,8 +8,12 @@ import { TaskPriority, TaskDifficulty } from '@/types';
 export const TaskModal: React.FC = () => {
   const { state, activeModal, editingTaskId, closeModal, saveTask } = useKronos();
 
+  const subjects = state.goal.subjects && state.goal.subjects.length > 0
+    ? state.goal.subjects
+    : ['Physics', 'Chemistry', 'Mathematics'];
+
   const [title, setTitle] = useState('');
-  const [subject, setSubject] = useState('Physics');
+  const [subject, setSubject] = useState(subjects[0] || 'General');
   const [category, setCategory] = useState('Practice');
   const [priority, setPriority] = useState<TaskPriority>('high');
   const [difficulty, setDifficulty] = useState<TaskDifficulty>('Medium');
@@ -31,7 +35,7 @@ export const TaskModal: React.FC = () => {
       }
     } else {
       setTitle('');
-      setSubject('Physics');
+      setSubject(subjects[0] || 'General');
       setCategory('Practice');
       setPriority('high');
       setDifficulty('Medium');
@@ -61,23 +65,23 @@ export const TaskModal: React.FC = () => {
           <input
             value={title}
             onChange={e => setTitle(e.target.value)}
-            placeholder="Physics Electrostatics — 40 PYQs"
+            placeholder="Complete 40 practice problems"
             required
           />
         </label>
 
         <div className="form-grid two">
           <label>
-            Subject
+            Subject / Module
             <select value={subject} onChange={e => setSubject(e.target.value)}>
-              <option>Physics</option>
-              <option>Chemistry</option>
-              <option>Mathematics</option>
-              <option>Mock Test</option>
-              <option>Revision</option>
-              <option>Health</option>
-              <option>Personal</option>
-              <option>General</option>
+              {subjects.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+              <option value="Mock Test">Mock Test</option>
+              <option value="Revision">Revision</option>
+              <option value="Health">Health</option>
+              <option value="Personal">Personal</option>
+              <option value="General">General</option>
             </select>
           </label>
 
@@ -136,7 +140,7 @@ export const TaskModal: React.FC = () => {
           <textarea
             value={notes}
             onChange={e => setNotes(e.target.value)}
-            placeholder="Focus notes or specific formula reminders..."
+            placeholder="Specific reminders or strategy notes..."
           />
         </label>
 

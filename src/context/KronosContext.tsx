@@ -41,8 +41,10 @@ interface KronosContextType {
   moveBacklog: (id: string, split?: boolean) => void;
   skipBacklog: (id: string) => void;
   
-  // Goal & Milestones
+  // Goal & Subjects
   saveGoal: (goalData: Partial<Goal>) => void;
+  addSubject: (subjectName: string) => void;
+  deleteSubject: (subjectName: string) => void;
   addMilestone: (title: string, targetDate: string, category: string) => void;
   toggleMilestone: (id: string) => void;
   deleteMilestone: (id: string) => void;
@@ -93,7 +95,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     mode: 'stopwatch',
     startedAt: 0,
     elapsed: 0,
-    subject: 'Physics',
+    subject: state.goal.subjects?.[0] || 'Physics',
     pomodoroMs: 25 * 60 * 1000
   });
 
@@ -102,13 +104,11 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setTimeout(() => setToastMessage(null), 2500);
   }, []);
 
-  // Sync state mutations to LocalStorage & history
   const updateState = useCallback((updater: (prev: AppState) => AppState) => {
     setState(prev => {
       const today = todayId();
       const updated = updater(prev);
       
-      // Auto recalculate today's history entry
       const todayStats = calculateDailyStats(updated, today);
       updated.history[today] = {
         ...(updated.history[today] || {}),
@@ -188,7 +188,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       } else {
         const newTask = makeTask(
           taskData.title || 'Untitled Mission Task',
-          taskData.subject || 'Physics',
+          taskData.subject || prev.goal.subjects[0] || 'General',
           taskData.priority || 'high',
           taskData.estimate || 60,
           taskData.category || 'Practice',
@@ -217,7 +217,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         {
           id: uid('session'),
           dateId: today,
-          subject: ['Physics', 'Chemistry', 'Mathematics'].includes(task.subject) ? task.subject : 'Revision',
+          subject: task.subject,
           minutes: mins,
           startedAt: new Date().toISOString(),
           endedAt: new Date().toISOString(),
@@ -271,6 +271,28 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }));
     showToast('Main goal updated');
     closeModal();
+  };
+
+  const addSubject = (subjectName: string) => {
+    const trimmed = subjectName.trim();
+    if (!trimmed) return;
+    updateState(prev => {
+      const existing = prev.goal.subjects || [];
+      if (existing.includes(trimmed)) return prev;
+      return {
+        ...prev,
+        goal: { ...prev.goal, subjects: [...existing, trimmed] }
+      };
+    });
+    showToast(`Subject "${trimmed}" added`);
+  };
+
+  const deleteSubject = (subjectName: string) => {
+    updateState(prev => ({
+      ...prev,
+      goal: { ...prev.goal, subjects: (prev.goal.subjects || []).filter(s => s !== subjectName) }
+    }));
+    showToast(`Subject "${subjectName}" removed`);
   };
 
   const addMilestone = (title: string, targetDate: string, category: string) => {
@@ -341,8 +363,8 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       chapters: [
         ...prev.chapters,
         {
-          subject: chapterData.subject || 'Physics',
-          chapter: chapterData.chapter || 'New Chapter',
+          subject: chapterData.subject || prev.goal.subjects[0] || 'General',
+          chapter: chapterData.chapter || 'New Chapter / Module',
           status: 'Not started',
           theory: Number(chapterData.theory) || 0,
           practice: Number(chapterData.practice) || 0,
@@ -354,7 +376,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         }
       ]
     }));
-    showToast('Chapter added to JEE tracker');
+    showToast('Module/Chapter added to Syllabus Tracker');
     closeModal();
   };
 
@@ -406,7 +428,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         }
       ]
     }));
-    showToast('Mock test logged');
+    showToast('Test result logged');
   };
 
   const addMistake = (mistakeData: Partial<Mistake>) => {
@@ -417,7 +439,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         {
           id: uid('mistake'),
           dateId: todayId(),
-          subject: mistakeData.subject || 'Physics',
+          subject: mistakeData.subject || prev.goal.subjects[0] || 'General',
           chapter: mistakeData.chapter || 'General',
           type: mistakeData.type || 'Concept error',
           note: mistakeData.note || ''
@@ -581,6 +603,8 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         moveBacklog,
         skipBacklog,
         saveGoal,
+        addSubject,
+        deleteSubject,
         addMilestone,
         toggleMilestone,
         deleteMilestone,
