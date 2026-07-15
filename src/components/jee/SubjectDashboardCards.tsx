@@ -27,7 +27,7 @@ export const SubjectDashboardCards: React.FC = () => {
             <span>{subject}</span>
             <strong>
               {progress}%
-              <small style={{ display: 'block', fontSize: '11.5px', color: 'var(--muted)', fontFamily: 'var(--font-sans)', letterSpacing: 0, marginTop: '4px' }}>
+              <small style={{ display: 'block', fontSize: '11.5px', color: 'var(--text-muted)', fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif', letterSpacing: 0, marginTop: '4px' }}>
                 {formatMinutes(minutes)} • {streakCount}d streak • {weak} weak
               </small>
             </strong>

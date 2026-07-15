@@ -26,7 +26,7 @@ export const DeleteWarningModal: React.FC = () => {
       eyebrow="Irreversible Action Warning"
       title="Permanently Delete All Data"
     >
-      <div className="modal-card" style={{ border: '1px solid rgba(220,38,38,0.4)', background: 'var(--bg-surface)', padding: '20px' }}>
+      <div style={{ border: '1px solid rgba(220,38,38,0.4)', background: 'var(--bg-surface)', padding: '20px', borderRadius: 'var(--radius-lg)' }}>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '14px', border: '1px solid rgba(220,38,38,0.3)', borderRadius: '14px', background: 'var(--accent-red-soft)', color: 'var(--accent-red)' }}>
           <ShieldAlert size={24} style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>

@@ -61,7 +61,7 @@ export const AuthModal: React.FC = () => {
       eyebrow="Account Access"
       title={mode === 'signin' ? 'Sign In to Kronos' : 'Create Aspirant Account'}
     >
-      <div className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <div className="goal-form">
         {/* Auth Mode Tabs */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
           <Button

@@ -31,7 +31,7 @@ export const ChapterModal: React.FC = () => {
       eyebrow="Syllabus Expansion"
       title="Add Chapter / Module to Tracker"
     >
-      <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <form onSubmit={handleSubmit} className="goal-form">
         <div className="form-grid two">
           <label>
             Subject / Domain Module

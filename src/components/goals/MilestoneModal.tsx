@@ -30,7 +30,7 @@ export const MilestoneModal: React.FC = () => {
       eyebrow="Goal Breakdown"
       title="Add Target Item"
     >
-      <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <form onSubmit={handleSubmit} className="goal-form">
         <div className="form-grid two">
           <label>
             Item Type

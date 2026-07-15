@@ -62,7 +62,7 @@ export const AIPoweredPlanner: React.FC = () => {
   };
 
   return (
-    <section className="panel wide" style={{ border: '1px solid var(--line-gold)', background: 'linear-gradient(135deg, var(--ivory-soft), var(--gold-soft))' }}>
+    <section className="panel wide" style={{ border: '1px solid var(--border-gold)', background: 'linear-gradient(135deg, var(--bg-surface-soft), var(--gold-soft))' }}>
       <div className="panel-header">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -99,7 +99,7 @@ export const AIPoweredPlanner: React.FC = () => {
 
       {/* Zero-API-Key Provider Selector Drawer */}
       {showConfig && (
-        <div style={{ padding: '14px', border: '1px solid var(--line-gold)', borderRadius: '16px', background: 'var(--ivory)', marginBottom: '16px', display: 'grid', gap: '10px' }}>
+        <div style={{ padding: '14px', border: '1px solid var(--border-gold)', borderRadius: '16px', background: 'var(--bg-surface)', marginBottom: '16px', display: 'grid', gap: '10px' }}>
           <h4 style={{ margin: 0, fontSize: '14px', color: 'var(--gold-dark)', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Terminal size={15} /> Configure Zero-API-Key Local LLM Provider
           </h4>
@@ -168,7 +168,7 @@ export const AIPoweredPlanner: React.FC = () => {
           </div>
 
           {liveAdvice && (
-            <div className="panel" style={{ padding: '12px 16px', background: 'var(--ivory)', border: '1px solid var(--line-gold)' }}>
+            <div className="panel" style={{ padding: '12px 16px', background: 'var(--bg-surface)', border: '1px solid var(--border-gold)' }}>
               <strong style={{ fontSize: '11px', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <CheckCircle2 size={13} /> Live AI Advice ({aiConfig.provider === 'ollama' ? `Ollama • ${aiConfig.ollamaModel}` : 'Local Intelligence'}):
               </strong>
@@ -204,7 +204,7 @@ export const AIPoweredPlanner: React.FC = () => {
             <article className="mini-stat"><span>Mistakes Logged</span><strong>{mistakes.length}</strong></article>
             <article className="mini-stat"><span>Pending Backlog</span><strong>{unresolvedBacklog.length}</strong></article>
           </div>
-          <p style={{ fontSize: '13.5px', color: 'var(--muted)', margin: '6px 0 0', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: '6px 0 0', lineHeight: 1.6 }}>
             <strong>AI Recommendation:</strong> Allocate an additional 2.5 hours of problem solving to {weakestSubject[0]} this week to prevent distribution imbalance. Clear the {unresolvedBacklog.length} pending backlog items during low-energy study slots.
           </p>
         </div>
@@ -235,7 +235,7 @@ export const AIPoweredPlanner: React.FC = () => {
         <div style={{ display: 'grid', gap: '10px' }}>
           <p className="panel-subtitle">Overload Safeguard & Backlog Recovery Plan:</p>
           {unresolvedBacklog.length === 0 ? (
-            <div className="empty-state" style={{ background: 'var(--green-soft)', border: '1px solid rgba(59,110,71,0.3)' }}>
+            <div className="empty-state" style={{ background: 'rgba(47,125,55,0.08)', border: '1px solid rgba(59,110,71,0.3)' }}>
               <strong>Zero Backlog Overload</strong> Your daily execution is caught up with zero missed tasks!
             </div>
           ) : (

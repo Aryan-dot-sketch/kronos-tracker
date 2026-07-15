@@ -59,7 +59,7 @@ export const TaskModal: React.FC = () => {
       eyebrow="Daily Mission"
       title={editingTaskId ? 'Edit Mission Task' : 'Add Mission Task'}
     >
-      <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <form onSubmit={handleSubmit} className="goal-form">
         <label>
           Task title
           <input

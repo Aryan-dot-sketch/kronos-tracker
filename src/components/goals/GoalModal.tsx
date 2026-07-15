@@ -65,7 +65,7 @@ export const GoalModal: React.FC = () => {
       eyebrow="Main Mission Architecture"
       title="Edit Main Goal"
     >
-      <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <form onSubmit={handleSubmit} className="goal-form">
         <label>
           Goal title / Name
           <input value={name} onChange={e => setName(e.target.value)} required />
@@ -83,7 +83,7 @@ export const GoalModal: React.FC = () => {
         </div>
 
         {/* Dynamic Subject / Module Manager */}
-        <div style={{ display: 'grid', gap: '8px', border: '1px solid var(--line-gold)', padding: '14px', borderRadius: '16px', background: 'var(--gold-soft)' }}>
+        <div style={{ display: 'grid', gap: '8px', border: '1px solid var(--border-gold)', padding: '14px', borderRadius: '16px', background: 'var(--gold-soft)' }}>
           <label style={{ margin: 0 }}>
             Active Goal Subjects / Modules
           </label>

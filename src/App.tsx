@@ -86,9 +86,7 @@ export const AppContent: React.FC = () => {
       </main>
 
       {/* Desktop Right Panel */}
-      <div className="desktop-only">
-        <RightInsightPanel />
-      </div>
+      <RightInsightPanel />
 
       {/* Mobile Drawer for Insights */}
       <RightInsightPanel 

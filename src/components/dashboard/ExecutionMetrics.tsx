@@ -7,10 +7,10 @@ export const ExecutionMetrics: React.FC = () => {
   const { todayStats, currentStreaks } = useKronos();
 
   return (
-    <>
+    <div className="metric-grid">
       <article className="metric-card">
         <span className="metric-label">Today’s Execution</span>
-        <strong>{todayStats.completionScore}%</strong>
+        <strong className="metric-value">{todayStats.completionScore}%</strong>
         <small>
           <Badge tone="green">{todayStats.completedTasks}/{todayStats.totalTasks} tasks complete</Badge>
         </small>
@@ -18,7 +18,7 @@ export const ExecutionMetrics: React.FC = () => {
 
       <article className="metric-card">
         <span className="metric-label">Current Streak</span>
-        <strong>{currentStreaks.current}d</strong>
+        <strong className="metric-value">{currentStreaks.current}d</strong>
         <small>
           <Badge tone="gold">Longest: {currentStreaks.longest} days</Badge>
         </small>
@@ -26,7 +26,7 @@ export const ExecutionMetrics: React.FC = () => {
 
       <article className="metric-card">
         <span className="metric-label">Study Time</span>
-        <strong>{formatMinutes(todayStats.studyMinutes)}</strong>
+        <strong className="metric-value">{formatMinutes(todayStats.studyMinutes)}</strong>
         <small>
           <Badge tone="blue">Target: {formatMinutes(todayStats.plannedMinutes)}</Badge>
         </small>
@@ -34,13 +34,13 @@ export const ExecutionMetrics: React.FC = () => {
 
       <article className="metric-card">
         <span className="metric-label">Focus Score</span>
-        <strong>{todayStats.focusScore}</strong>
+        <strong className="metric-value">{todayStats.focusScore}</strong>
         <small>
           <Badge tone={todayStats.criticalDone ? 'green' : 'red'}>
             {todayStats.criticalDone ? 'Critical tasks protected' : 'Critical pending'}
           </Badge>
         </small>
       </article>
-    </>
+    </div>
   );
 };

@@ -21,7 +21,7 @@ export const ImportModal: React.FC = () => {
       eyebrow="Data Control"
       title="Import Backup JSON"
     >
-      <form onSubmit={handleSubmit} className="modal-card" style={{ border: 0, padding: 0, boxShadow: 'none' }}>
+      <form onSubmit={handleSubmit} className="goal-form">
         <label>
           Paste JSON content or select backup file
           <textarea
