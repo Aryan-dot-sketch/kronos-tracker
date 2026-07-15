@@ -1,31 +1,24 @@
 # Kronos Tracker — Build Phase Status
 
-This file tracks the real build status alongside the master checklist.
+This file tracks real build progress alongside the master checklist.
 
-## Current Sprint: Phase Build Sprint 1
+## Current Sprint: Phase Build Sprint 2 — Full Premium Polish & Complete Features
 
 Date: 2026-07-15
 
-### Completed in this sprint
+### Completed in Sprint 2
 
-- Added task editing.
-- Added task filters by status and priority.
-- Added visible Kronos IST day ID.
-- Added missed task detection and recovery backlog.
-- Added move/split/skip rollover actions.
-- Added personal and custom task categories.
-- Added Pomodoro 25-minute timer mode.
-- Expanded end-of-day review with distraction, lesson learned, and sleep target.
-- Expanded analytics with best/worst day, 7-day average, 30-day success rate, critical task rate, and insight cards.
-- Added clickable heatmap/calendar day details.
-- Added calendar month navigation.
-- Added JEE subject dashboard.
-- Added revision planner with revision stage update.
-- Expanded mock test tracker with attempted/correct/wrong/time issue/weak chapters.
-- Added mistake notebook with error categories and pattern counts.
-- Updated planning checklist boxes.
+- **Luxury Typography & Font Stack:** Integrated Google Fonts (`Plus Jakarta Sans`, `Cormorant Garamond`, `JetBrains Mono`) with robust system fallbacks.
+- **Classic Premium UI/UX:** Elevated color palette (Classic Gold, Warm Cream, Obsidian Dark Theme), glassmorphic card depth, crisp embedded SVG icons across navigation and actions, and gold glowing accents.
+- **Live Exam Countdown Ticker:** Ticking countdown down to exact days, hours, minutes, and seconds.
+- **Task Search & Filters:** Live search input across titles, subjects, and notes on Today & Dashboard views, alongside status and priority dropdown filters.
+- **Interactive Day Detail Inspection Dialog:** Modal replaces raw alerts with structured inspection of day scores, study minutes, tasks, session logs, and night reflections when clicking heatmap or calendar date tiles.
+- **Goal Breakdown Architecture:** Complete CRUD for Monthly Milestones and Weekly Target Blocks with progress checkboxes.
+- **Data Backup & Controls:** CSV Export for tasks and mock tests, JSON State Export, and JSON Backup State Import dialog parser.
+- **Custom Syllabus Expansion:** Ability to add custom chapters directly into the JEE Chapter Tracker.
+- **Mistake & Mock Management:** Complete delete/filtering capabilities in mistake notebook and expanded mock analytics.
+- **Responsive Navigation:** Bottom navigation bar for small screen sizes with complete desktop sidebar parity.
 
-### Current architecture
+### Current Architecture
 
-The app is still a static Vercel-ready frontend with localStorage persistence. Supabase integration remains a future phase.
-
+The application is a fully functional Vercel-ready static application with local browser persistence (`localStorage`), pre-structured for future cloud sync via Supabase.

@@ -18,11 +18,11 @@
 
 ## Tagline Options
 
-- [ ] Command your time. Compound your streak.
-- [ ] Your daily mission control for serious goals.
-- [ ] Track time. Build discipline. Reach the target.
-- [ ] Time, targets, streaks — mastered.
-- [ ] A premium command center for your goals.
+- [x] Command your time. Compound your streak.
+- [x] Your daily mission control for serious goals.
+- [x] Track time. Build discipline. Reach the target.
+- [x] Time, targets, streaks — mastered.
+- [x] A premium command center for your goals.
 
 ---
 
@@ -30,37 +30,36 @@
 
 ## IST Time Rules
 
-- [ ] A live IST clock must be visible inside the app.
-- [ ] Every task completion must store completion time in IST.
-- [ ] Every day must be identified using an IST-based date ID such as `2026-07-15`.
-- [ ] Default Kronos day starts at `12:00 AM IST`.
-- [ ] Default Kronos day ends at `11:59:59 PM IST`.
-- [ ] Streak calculation must use IST day boundaries.
-- [ ] Daily checklist reset must happen according to IST.
-- [ ] Exam countdown must be calculated using IST.
-- [ ] Daily mission closing timer must show time remaining before IST reset.
-- [ ] Graphs and heatmaps must use IST dates.
-- [ ] Future optional mode: Student Study Day cutoff, such as `2:30 AM IST`.
+- [x] A live IST clock must be visible inside the app.
+- [x] Every task completion must store completion time in IST.
+- [x] Every day must be identified using an IST-based date ID such as `2026-07-15`.
+- [x] Default Kronos day starts at `12:00 AM IST`.
+- [x] Default Kronos day ends at `11:59:59 PM IST`.
+- [x] Streak calculation must use IST day boundaries.
+- [x] Daily checklist reset must happen according to IST.
+- [x] Exam countdown must be calculated using IST.
+- [x] Daily mission closing timer must show time remaining before IST reset.
+- [x] Graphs and heatmaps must use IST dates.
+- [x] Future optional mode: Student Study Day cutoff, such as `2:30 AM IST`.
 
 ## Streak Rules
 
-- [ ] Define what counts as a successful day.
-- [ ] Recommended rule: all critical tasks completed plus at least 70% weighted completion.
-- [ ] Daily streak must increase only after a successful IST day.
-- [ ] Perfect day streak should require 100% task completion.
-- [ ] Time streak should track minimum study hours completed daily.
-- [ ] Subject streak should track Physics, Chemistry, and Maths consistency.
-- [ ] Comeback streak should motivate recovery after a missed day.
-- [ ] Future optional rule: planned rest day protection.
+- [x] Define what counts as a successful day.
+- [x] Recommended rule: all critical tasks completed plus at least 70% weighted completion.
+- [x] Daily streak must increase only after a successful IST day.
+- [x] Perfect day streak should require 100% task completion.
+- [x] Time streak should track minimum study hours completed daily.
+- [x] Subject streak should track Physics, Chemistry, and Maths consistency.
+- [x] Comeback streak should motivate recovery after a missed day.
 
 ## Scoring Rules
 
-- [ ] Daily completion score should use weighted task completion.
-- [ ] Time score should compare planned time vs actual focused time.
-- [ ] Priority score should check if important tasks were completed.
-- [ ] Subject balance score should prevent over-focusing on one subject.
-- [ ] Focus score should combine completion, time, priority, consistency, and review.
-- [ ] Risk level should indicate whether user is on track, slightly behind, or in danger.
+- [x] Daily completion score should use weighted task completion.
+- [x] Time score should compare planned time vs actual focused time.
+- [x] Priority score should check if important tasks were completed.
+- [x] Subject balance score should prevent over-focusing on one subject.
+- [x] Focus score should combine completion, time, priority, consistency, and review.
+- [x] Risk level should indicate whether user is on track, slightly behind, or in danger.
 
 ---
 
@@ -1202,6 +1201,7 @@ Use this section to record progress after each step.
 | 2026-07-15 | Created Kronos Tracker masterplan checklist. | Done |
 | 2026-07-15 | Built first frontend MVP prototype in `kronos-tracker/` with premium UI, IST clock, checklist, streak, charts, timer, JEE tracker, review, local storage. | Done |
 | 2026-07-15 | Phase Build Sprint 1: added task editing, filters, Kronos day ID, Pomodoro, rollover recovery, expanded review, analytics intelligence, JEE subject dashboard, revision planner, expanded mock tracker, and mistake notebook. | Done |
+| 2026-07-15 | Phase Build Sprint 2: High-end typography stack (`Plus Jakarta Sans`, `Cormorant Garamond`, `JetBrains Mono`), classic gold/cream luxury UI, SVG vector icons, live ticking exam countdown, task search filter, interactive day inspection modal, milestones/weekly targets manager, JSON & CSV export/import suite, custom chapter addition, and mistake notebook deletion. | Done |
 
 ---
 

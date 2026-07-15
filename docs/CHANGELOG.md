@@ -1,42 +1,15 @@
 # Kronos Tracker — Changelog
 
-This file records all planning and build updates.
+This file records all planning, architecture, and implementation updates.
 
-## 2026-07-15
+## 2026-07-15 — Full Premium Polish & Complete Features (Sprint 2)
 
-- Created planning folder.
-- Created `KRONOS_TRACKER_MASTERPLAN_CHECKLIST.md`.
-- Created `README.md`.
-- Created `CHANGELOG.md`.
-
-## 2026-07-15 — Frontend MVP Started
-
-- Created `kronos-tracker/` website folder.
-- Built first working static frontend MVP.
-- Added premium cream/classic dashboard UI.
-- Added live IST clock and IST reset countdown.
-- Added editable main goal and JEE Mains countdown.
-- Added daily checklist with localStorage persistence.
-- Added weighted completion, focus score, streaks, charts, heatmap, subject balance, focus timer, JEE tracker, mock tracker, review page, settings, export/reset controls, dark mode, and responsive layout.
-
-## 2026-07-15 — GitHub Push
-
-- Pushed `kronos-tracker/` initial frontend MVP to GitHub repository `Aryan-dot-sketch/kronos-tracker` on branch `main`.
-- Repository is ready for Vercel static deployment.
-- Added future Supabase backend planning file.
-
-## 2026-07-15 — Phase Build Sprint 1
-
-- Created all major planning/spec documentation files.
-- Added task editing and task filters.
-- Added visible Kronos IST day ID.
-- Added missed task detection and recovery backlog.
-- Added move/split/skip rollover controls.
-- Added Personal and Custom task categories.
-- Added Pomodoro 25-minute timer mode.
-- Expanded end-of-day review fields.
-- Expanded analytics intelligence and clickable day details.
-- Added calendar month navigation.
-- Expanded JEE mode with subject dashboard, revision planner, richer mock tracker, and mistake notebook.
-- Updated masterplan checklist boxes to match completed work.
-
+- **Typography & Font System:** Integrated `Plus Jakarta Sans` for body/UI, `Cormorant Garamond` for editorial luxury serif headings/stat numbers, and `JetBrains Mono` for clocks and numeric tickers.
+- **Embedded SVG System:** Replaced Unicode glyphs with vector SVG icons across navigation items, buttons, task checks, and search bars.
+- **Goal Breakdown Architecture:** Implemented full CRUD for Monthly Milestones and Weekly Targets with interactive checkbox toggles.
+- **Live Exam Ticker:** Upgraded countdown display to calculate exact remaining days, hours, minutes, and seconds in IST.
+- **Day Inspection System:** Created custom `dayDetailDialog` modal for deep inspection of any date tile clicked on the heatmap or calendar.
+- **Task Search Engine:** Added real-time search filtering across task titles, subjects, and notes on Today & Dashboard pages.
+- **Data Export & Import Suite:** Added CSV export for Tasks and Mock Tests, alongside JSON state export and a JSON restore modal parser.
+- **Syllabus Expansion:** Added custom chapter entry modal to JEE Tracker, with theory/practice/PYQ initial progress.
+- **Mistake & Mock Controls:** Added deletion capabilities and expanded error category pattern counters in the Mistake Notebook.

@@ -1,0 +1,6 @@
+import React from 'react';
+import { SettingsForm } from '@/components/settings/SettingsForm';
+
+export const SettingsPage: React.FC = () => {
+  return <SettingsForm />;
+};
