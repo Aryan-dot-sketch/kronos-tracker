@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 
 export const SettingsForm: React.FC = () => {
-  const { state, saveSettings, openModal, resetDemoData } = useKronos();
+  const { state, saveSettings, openModal, clearStateData } = useKronos();
 
   const [name, setName] = useState(state.settings.name);
   const [theme, setTheme] = useState<'light' | 'dark'>(state.ui.theme);
@@ -59,7 +59,7 @@ export const SettingsForm: React.FC = () => {
         <div className="panel-header">
           <div>
             <h3>Data Controls & Backup</h3>
-            <p className="panel-subtitle">Manage browser storage, export backups, or restore state.</p>
+            <p className="panel-subtitle">Manage browser storage, export backups, or clear data.</p>
           </div>
         </div>
 
@@ -68,8 +68,8 @@ export const SettingsForm: React.FC = () => {
           <Button variant="ghost" onClick={() => exportTasksCSV(state)}>Export Tasks CSV</Button>
           <Button variant="ghost" onClick={() => exportMocksCSV(state)}>Export Mock Tests CSV</Button>
           <Button variant="ghost" onClick={() => openModal('import')}>Import Backup JSON</Button>
-          <Button variant="ghost" style={{ color: 'var(--red)', borderColor: 'rgba(168,67,67,0.3)' }} onClick={resetDemoData}>
-            Reset All Demo Data
+          <Button variant="ghost" style={{ color: 'var(--red)', borderColor: 'rgba(168,67,67,0.3)' }} onClick={clearStateData}>
+            Clear All Data (Start Fresh)
           </Button>
         </div>
       </section>

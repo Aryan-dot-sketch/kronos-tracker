@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { AppState, ViewType, Task, Goal, JEEChapter, MockTest, Mistake, DailyReview } from '@/types';
-import { loadState, saveState, seedState, uid, makeTask, normalizeState, KEY } from '../lib/storage/local-storage';
-import { todayId, addDays, istParts, nextISTResetMs } from '../lib/time/ist';
+import { loadState, saveState, cleanState, uid, makeTask, normalizeState, KEY } from '../lib/storage/local-storage';
+import { todayId, addDays } from '../lib/time/ist';
 import { calculateDailyStats, calculateSubjectMinutes } from '../lib/scoring/scoring-engine';
-import { calculateStreaks, calculateSubjectStreak } from '../lib/streaks/streak-engine';
+import { calculateStreaks } from '../lib/streaks/streak-engine';
 
 interface FocusTimerState {
   running: boolean;
@@ -62,7 +62,7 @@ interface KronosContextType {
   saveDailyReview: (reviewData: Partial<DailyReview>) => void;
   saveSettings: (settingsData: Partial<AppState['settings']>, theme: 'light' | 'dark') => void;
   importJSONState: (jsonStr: string) => boolean;
-  resetDemoData: () => void;
+  clearStateData: () => void;
 
   // Focus Timer
   focusTimer: FocusTimerState;
@@ -343,12 +343,12 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         {
           subject: chapterData.subject || 'Physics',
           chapter: chapterData.chapter || 'New Chapter',
-          status: 'Practice ongoing',
-          theory: Number(chapterData.theory) || 50,
-          practice: Number(chapterData.practice) || 20,
-          pyq: Number(chapterData.pyq) || 10,
-          revision: chapterData.revision || 'R1',
-          strength: chapterData.strength || 'Medium',
+          status: 'Not started',
+          theory: Number(chapterData.theory) || 0,
+          practice: Number(chapterData.practice) || 0,
+          pyq: Number(chapterData.pyq) || 0,
+          revision: chapterData.revision || 'R0',
+          strength: chapterData.strength || 'Weak',
           lastRevised: todayId(),
           nextRevision: addDays(todayId(), 3)
         }
@@ -471,14 +471,14 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   };
 
-  const resetDemoData = () => {
-    if (confirm('Reset Kronos Tracker demo state? LocalStorage will be refreshed.')) {
+  const clearStateData = () => {
+    if (confirm('Clear all data to start fresh? All local storage values will be reset.')) {
       localStorage.removeItem(KEY);
-      const fresh = seedState();
-      setState(fresh);
-      saveState(fresh);
+      const clean = cleanState();
+      setState(clean);
+      saveState(clean);
       setActiveView('dashboard');
-      showToast('Demo state reset');
+      showToast('Tracker data cleared cleanly');
     }
   };
 
@@ -596,7 +596,7 @@ export const KronosProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         saveDailyReview,
         saveSettings,
         importJSONState,
-        resetDemoData,
+        clearStateData,
         focusTimer,
         startTimer,
         startPomodoro,
