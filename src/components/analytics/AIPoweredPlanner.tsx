@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { calculateSubjectBalance } from '@/lib/streaks/streak-engine';
 import { formatMinutes } from '@/lib/time/ist';
-import { askAICoach } from '@/lib/ai/llm-client';
+import { askAICoach, AIConfig, DEFAULT_AI_CONFIG } from '@/lib/ai/llm-client';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Cpu, Settings, Terminal, CheckCircle2 } from 'lucide-react';
 
 export const AIPoweredPlanner: React.FC = () => {
   const { state, saveTask } = useKronos();
@@ -13,6 +13,10 @@ export const AIPoweredPlanner: React.FC = () => {
   const [activePlan, setActivePlan] = useState<'daily' | 'weekly' | 'weakness' | 'recovery'>('daily');
   const [liveAdvice, setLiveAdvice] = useState<string | null>(null);
   const [loadingAdvice, setLoadingAdvice] = useState(false);
+  const [showConfig, setShowConfig] = useState(false);
+
+  // AI Configuration State (Zero API Key by default via Local Ollama / Local AI)
+  const [aiConfig, setAiConfig] = useState<AIConfig>(DEFAULT_AI_CONFIG);
 
   const balanceData = calculateSubjectBalance(state, 7);
   const weakestSubject = Object.entries(balanceData).sort((a, b) => a[1].pct - b[1].pct)[0];
@@ -20,10 +24,14 @@ export const AIPoweredPlanner: React.FC = () => {
   const unresolvedBacklog = state.backlog.filter(b => b.status === 'unresolved');
   const mistakes = state.mistakes;
 
-  // Trigger Live AI Coach Response
+  // Trigger Live AI Coach Response (Ollama / Local LLM / Heuristic Engine)
   const handleFetchAdvice = async () => {
     setLoadingAdvice(true);
-    const result = await askAICoach("Provide a 2-sentence strategy for today's study schedule.", state);
+    const result = await askAICoach(
+      "Provide a 2-sentence actionable daily focus strategy.",
+      state,
+      aiConfig
+    );
     setLiveAdvice(result);
     setLoadingAdvice(false);
   };
@@ -60,13 +68,20 @@ export const AIPoweredPlanner: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Sparkles size={20} color="var(--gold)" />
             <h3 style={{ margin: 0 }}>AI Smart Planning & Coaching Suite</h3>
+            <Badge tone="green" style={{ marginLeft: '4px', fontSize: '11px' }}>
+              <Cpu size={12} style={{ marginRight: '3px' }} />
+              {aiConfig.provider === 'ollama' ? `Ollama (${aiConfig.ollamaModel})` : aiConfig.provider === 'custom' ? 'Local LLM' : 'Instant AI Engine'}
+            </Badge>
           </div>
           <p className="panel-subtitle" style={{ marginTop: '4px' }}>
-            Personalized intelligence engine analyzing study time, weak subjects, mistake notes, and exam deadlines.
+            Works 100% locally with <strong>Ollama (no API key needed)</strong>, local LLMs (LM Studio), or built-in analytics engine.
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '6px' }}>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+          <Button variant="icon" title="AI Provider Settings" onClick={() => setShowConfig(!showConfig)}>
+            <Settings size={18} />
+          </Button>
           <Button variant={activePlan === 'daily' ? 'primary' : 'ghost'} onClick={() => setActivePlan('daily')}>
             Daily Schedule
           </Button>
@@ -82,15 +97,69 @@ export const AIPoweredPlanner: React.FC = () => {
         </div>
       </div>
 
+      {/* Zero-API-Key Provider Selector Drawer */}
+      {showConfig && (
+        <div style={{ padding: '14px', border: '1px solid var(--line-gold)', borderRadius: '16px', background: 'var(--ivory)', marginBottom: '16px', display: 'grid', gap: '10px' }}>
+          <h4 style={{ margin: 0, fontSize: '14px', color: 'var(--gold-dark)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Terminal size={15} /> Configure Zero-API-Key Local LLM Provider
+          </h4>
+
+          <div className="form-grid two">
+            <label>
+              Active LLM Provider
+              <select
+                value={aiConfig.provider}
+                onChange={e => setAiConfig({ ...aiConfig, provider: e.target.value as any })}
+              >
+                <option value="ollama">Local Ollama (http://localhost:11434) — $0 Keyless</option>
+                <option value="custom">Custom Local Host (LM Studio / vLLM / LocalAI)</option>
+                <option value="heuristic">Built-In Heuristic Analytics Core (0ms Latency)</option>
+                <option value="openai_groq">Cloud API Key (Groq / OpenAI)</option>
+              </select>
+            </label>
+
+            {aiConfig.provider === 'ollama' && (
+              <label>
+                Ollama Model Name
+                <input
+                  value={aiConfig.ollamaModel}
+                  onChange={e => setAiConfig({ ...aiConfig, ollamaModel: e.target.value })}
+                  placeholder="e.g. llama3, qwen2.5, phi3, deepseek-r1, gemma"
+                />
+              </label>
+            )}
+
+            {aiConfig.provider === 'custom' && (
+              <label>
+                Custom Local Host Endpoint URL
+                <input
+                  value={aiConfig.customUrl}
+                  onChange={e => setAiConfig({ ...aiConfig, customUrl: e.target.value })}
+                  placeholder="http://127.0.0.1:1234/v1"
+                />
+              </label>
+            )}
+          </div>
+
+          <p className="panel-subtitle" style={{ fontSize: '12px', margin: 0 }}>
+            {aiConfig.provider === 'ollama'
+              ? 'To run Ollama locally for free without API keys, run: `ollama run llama3` or `ollama run qwen2.5` in your terminal.'
+              : aiConfig.provider === 'custom'
+              ? 'Points to your local server (LM Studio, LocalAI, vLLM) on your network with zero external costs.'
+              : 'Built-in instant analysis runs completely in your browser JS engine.'}
+          </p>
+        </div>
+      )}
+
       {activePlan === 'daily' && (
         <div style={{ display: 'grid', gap: '12px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p className="panel-subtitle">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+            <p className="panel-subtitle" style={{ margin: 0 }}>
               Calculated for <strong>{state.goal.dailyHours}h daily target</strong>. Primary focus set to <strong>{state.goal.weakArea}</strong>.
             </p>
             <div style={{ display: 'flex', gap: '8px' }}>
               <Button variant="ghost" onClick={handleFetchAdvice} disabled={loadingAdvice}>
-                {loadingAdvice ? 'Consulting AI...' : 'Ask AI Coach'}
+                {loadingAdvice ? 'Consulting Local LLM...' : `Ask AI Coach (${aiConfig.provider.toUpperCase()})`}
               </Button>
               <Button variant="ghost" onClick={generateDailyTasks}>
                 + Auto-Inject AI Suggested Tasks
@@ -99,9 +168,11 @@ export const AIPoweredPlanner: React.FC = () => {
           </div>
 
           {liveAdvice && (
-            <div className="panel" style={{ padding: '12px', background: 'var(--ivory)', border: '1px solid var(--line-gold)' }}>
-              <strong style={{ fontSize: '12px', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Live AI Coach Response:</strong>
-              <p style={{ margin: '4px 0 0', fontSize: '13.5px', lineHeight: 1.5 }}>{liveAdvice}</p>
+            <div className="panel" style={{ padding: '12px 16px', background: 'var(--ivory)', border: '1px solid var(--line-gold)' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CheckCircle2 size={13} /> Live AI Advice ({aiConfig.provider === 'ollama' ? `Ollama • ${aiConfig.ollamaModel}` : 'Local Intelligence'}):
+              </strong>
+              <p style={{ margin: '6px 0 0', fontSize: '14px', lineHeight: 1.5, fontWeight: 500 }}>{liveAdvice}</p>
             </div>
           )}
 
