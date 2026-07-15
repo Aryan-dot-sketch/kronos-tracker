@@ -154,7 +154,7 @@
   --gold-light: #60a5fa;
   --gold-dark: #1e40af;
   --gold-soft: rgba(59, 130, 246, 0.2);
-  --gold-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 45%, #1e40af 100%);
+  --gold-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 48%, #1e40af 100%);
 
   --accent-green: #16a34a;
   --accent-green-soft: rgba(22, 163, 74, 0.17);
