@@ -1,13 +1,13 @@
 -- =====================================================================
--- KRONOS TRACKER — USERNAME + NAME + PASSWORD AUTH DATABASE SCHEMA
--- Execute this script inside Supabase SQL Editor to initialize
--- all tables, unique username constraints, triggers, and RLS policies.
+-- KRONOS TRACKER — MIGRATION-SAFE SUPABASE POSTGRESQL DATABASE SCHEMA
+-- Handles both NEW database setups and EXISTING database migrations smoothly.
+-- Execute this script inside Supabase SQL Editor.
 -- =====================================================================
 
 -- 1. Enable Required Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Create Updated-At Trigger Function
+-- 2. Create or Replace Updated-At Trigger Function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -18,11 +18,10 @@ $$ LANGUAGE plpgsql;
 
 -- ---------------------------------------------------------------------
 -- TABLE 1: PROFILES
--- Stores user profile metadata, unique username, theme preferences.
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  username TEXT UNIQUE NOT NULL,
+  username TEXT UNIQUE,
   name TEXT NOT NULL DEFAULT 'Aspirant',
   mode TEXT DEFAULT 'Strict IST Mode',
   study_day_cutoff TEXT DEFAULT '00:00',
@@ -31,6 +30,19 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure `username` column exists if table was created in a previous schema version
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS username TEXT;
+
+-- Enforce UNIQUE constraint on username if not present
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'profiles_username_key'
+  ) THEN
+    ALTER TABLE public.profiles ADD CONSTRAINT profiles_username_key UNIQUE (username);
+  END IF;
+END $$;
 
 CREATE INDEX IF NOT EXISTS idx_profiles_username ON public.profiles(username);
 
@@ -54,6 +66,8 @@ CREATE TABLE IF NOT EXISTS public.goals (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+ALTER TABLE public.goals ADD COLUMN IF NOT EXISTS subjects JSONB DEFAULT '["Physics", "Chemistry", "Mathematics"]'::jsonb;
 
 -- ---------------------------------------------------------------------
 -- TABLE 3: MILESTONES
@@ -256,7 +270,6 @@ CREATE TABLE IF NOT EXISTS public.backlog_items (
 
 -- ---------------------------------------------------------------------
 -- AUTOMATIC PROFILE CREATION TRIGGER ON USER SIGNUP
--- Extracts `username` and `name` passed during register.
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
@@ -268,8 +281,8 @@ BEGIN
     COALESCE(NEW.raw_user_meta_data->>'name', 'Aspirant')
   )
   ON CONFLICT (id) DO UPDATE SET
-    username = EXCLUDED.username,
-    name = EXCLUDED.name;
+    username = COALESCE(EXCLUDED.username, public.profiles.username),
+    name = COALESCE(EXCLUDED.name, public.profiles.name);
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -297,29 +310,66 @@ ALTER TABLE public.mistakes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.backlog_items ENABLE ROW LEVEL SECURITY;
 
 -- ---------------------------------------------------------------------
--- RLS POLICIES FOR SECURE USER ACCESS
+-- RE-CREATE RLS POLICIES (DROP EXISTING FIRST TO PREVENT DUPLICATE ERRORS)
 -- ---------------------------------------------------------------------
+DROP POLICY IF EXISTS "Public profile username check" ON public.profiles;
+DROP POLICY IF EXISTS "Users view own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users update own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users insert own profile" ON public.profiles;
 
--- Profiles: Allow viewing any username (for lookup & unique check), editing own profile
 CREATE POLICY "Public profile username check" ON public.profiles FOR SELECT USING (true);
 CREATE POLICY "Users update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
 CREATE POLICY "Users insert own profile" ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
 
--- Goal & User Data Tables (strictly private per user)
+-- Goals
+DROP POLICY IF EXISTS "Users access own goals" ON public.goals;
 CREATE POLICY "Users access own goals" ON public.goals FOR ALL USING (auth.uid() = user_id);
+
+-- Milestones
+DROP POLICY IF EXISTS "Users access own milestones" ON public.milestones;
 CREATE POLICY "Users access own milestones" ON public.milestones FOR ALL USING (auth.uid() = user_id);
+
+-- Weekly Targets
+DROP POLICY IF EXISTS "Users access own weekly targets" ON public.weekly_targets;
 CREATE POLICY "Users access own weekly targets" ON public.weekly_targets FOR ALL USING (auth.uid() = user_id);
+
+-- Tasks
+DROP POLICY IF EXISTS "Users access own tasks" ON public.tasks;
 CREATE POLICY "Users access own tasks" ON public.tasks FOR ALL USING (auth.uid() = user_id);
+
+-- Study Sessions
+DROP POLICY IF EXISTS "Users access own sessions" ON public.study_sessions;
 CREATE POLICY "Users access own sessions" ON public.study_sessions FOR ALL USING (auth.uid() = user_id);
+
+-- Daily Scores
+DROP POLICY IF EXISTS "Users access own daily scores" ON public.daily_scores;
 CREATE POLICY "Users access own daily scores" ON public.daily_scores FOR ALL USING (auth.uid() = user_id);
+
+-- Streaks
+DROP POLICY IF EXISTS "Users access own streaks" ON public.streaks;
 CREATE POLICY "Users access own streaks" ON public.streaks FOR ALL USING (auth.uid() = user_id);
+
+-- Reviews
+DROP POLICY IF EXISTS "Users access own reviews" ON public.reviews;
 CREATE POLICY "Users access own reviews" ON public.reviews FOR ALL USING (auth.uid() = user_id);
+
+-- JEE Chapters
+DROP POLICY IF EXISTS "Users access own jee chapters" ON public.jee_chapters;
 CREATE POLICY "Users access own jee chapters" ON public.jee_chapters FOR ALL USING (auth.uid() = user_id);
+
+-- Mock Tests
+DROP POLICY IF EXISTS "Users access own mock tests" ON public.mock_tests;
 CREATE POLICY "Users access own mock tests" ON public.mock_tests FOR ALL USING (auth.uid() = user_id);
+
+-- Mistakes
+DROP POLICY IF EXISTS "Users access own mistakes" ON public.mistakes;
 CREATE POLICY "Users access own mistakes" ON public.mistakes FOR ALL USING (auth.uid() = user_id);
+
+-- Backlog Items
+DROP POLICY IF EXISTS "Users access own backlog items" ON public.backlog_items;
 CREATE POLICY "Users access own backlog items" ON public.backlog_items FOR ALL USING (auth.uid() = user_id);
 
 -- =====================================================================
--- SCHEMA INITIALIZATION COMPLETE
--- Direct Username + Name + Password authentication ready!
+-- MIGRATION & SCHEMA EXECUTION COMPLETE
 -- =====================================================================
