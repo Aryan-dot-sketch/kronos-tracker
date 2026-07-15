@@ -1,9 +1,9 @@
 /* ============================================
-   KRONOS TRACKER — THE CRAZIEST ULTRA-LUXURY THEMES
-   Insanely premium, dramatic, striking golds + perfect contrast
+   KRONOS TRACKER — THE MOST CRAZY ULTRA-LUXURY THEMES
+   Extreme drama, insane contrast, breathtaking golds
    ============================================ */
 
-/* THEME 1: CLASSIC CREAM — Warm, Royal, Opulent */
+/* THEME 1: CLASSIC CREAM — Warm, Rich, Royal Luxury */
 :root, [data-theme="light"] {
   --bg-main: #f0e0c4;
   --bg-surface: #fff2d9;
@@ -37,7 +37,7 @@
   --shadow-lg: 0 44px 110px rgba(10, 8, 5, 0.26);
 }
 
-/* THEME 2: OBSIDIAN GOLD — Insanely Rich Dramatic Dark */
+/* THEME 2: OBSIDIAN GOLD — Insanely Rich, Deep, Dramatic */
 [data-theme="dark"] {
   --bg-main: #040201;
   --bg-surface: #0a0703;
@@ -51,27 +51,27 @@
   --gold: #f8d89a;
   --gold-light: #fce4c0;
   --gold-dark: #c28f1f;
-  --gold-soft: rgba(248, 216, 154, 0.4);
+  --gold-soft: rgba(248, 216, 154, 0.42);
   --gold-gradient: linear-gradient(135deg, #fce4c0 0%, #f8d89a 30%, #c28f1f 100%);
 
   --accent-green: #7be99a;
-  --accent-green-soft: rgba(123, 233, 154, 0.38);
+  --accent-green-soft: rgba(123, 233, 154, 0.4);
   --accent-amber: #f8d89a;
-  --accent-amber-soft: rgba(248, 216, 154, 0.38);
+  --accent-amber-soft: rgba(248, 216, 154, 0.4);
   --accent-red: #ff8f8f;
-  --accent-red-soft: rgba(255, 143, 143, 0.38);
+  --accent-red-soft: rgba(255, 143, 143, 0.4);
   --accent-blue: #8fc1ff;
-  --accent-blue-soft: rgba(143, 193, 255, 0.38);
+  --accent-blue-soft: rgba(143, 193, 255, 0.4);
 
   --border-line: rgba(201, 170, 138, 0.22);
-  --border-gold: rgba(248, 216, 154, 0.8);
+  --border-gold: rgba(248, 216, 154, 0.82);
 
   --shadow-sm: 0 9px 34px rgba(0,0,0,0.72);
   --shadow-md: 0 28px 75px rgba(0,0,0,0.88);
   --shadow-lg: 0 56px 140px rgba(0,0,0,0.98);
 }
 
-/* THEME 3: MIDNIGHT — Insanely Electric & Bold */
+/* THEME 3: MIDNIGHT — Insanely Electric, Bold, Striking */
 [data-theme="midnight"] {
   --bg-main: #01030a;
   --bg-surface: #05071a;
@@ -85,27 +85,27 @@
   --gold: #a8b5ff;
   --gold-light: #cfd8ff;
   --gold-dark: #5256f2;
-  --gold-soft: rgba(168, 181, 255, 0.45);
+  --gold-soft: rgba(168, 181, 255, 0.48);
   --gold-gradient: linear-gradient(135deg, #cfd8ff 0%, #a8b5ff 30%, #5256f2 100%);
 
   --accent-green: #7be99a;
-  --accent-green-soft: rgba(123, 233, 154, 0.42);
+  --accent-green-soft: rgba(123, 233, 154, 0.45);
   --accent-amber: #f8d89a;
-  --accent-amber-soft: rgba(248, 216, 154, 0.42);
+  --accent-amber-soft: rgba(248, 216, 154, 0.45);
   --accent-red: #ff8f8f;
-  --accent-red-soft: rgba(255, 143, 143, 0.42);
+  --accent-red-soft: rgba(255, 143, 143, 0.45);
   --accent-blue: #8fc1ff;
-  --accent-blue-soft: rgba(143, 193, 255, 0.42);
+  --accent-blue-soft: rgba(143, 193, 255, 0.45);
 
-  --border-line: rgba(117, 133, 208, 0.28);
-  --border-gold: rgba(168, 181, 255, 0.82);
+  --border-line: rgba(117, 133, 208, 0.3);
+  --border-gold: rgba(168, 181, 255, 0.85);
 
   --shadow-sm: 0 9px 34px rgba(0,0,0,0.75);
   --shadow-md: 0 28px 75px rgba(0,0,0,0.9);
   --shadow-lg: 0 56px 140px rgba(0,0,0,0.99);
 }
 
-/* THEME 4: ROYAL EMERALD — Insanely Opulent Rich */
+/* THEME 4: ROYAL EMERALD — Insanely Opulent, Rich */
 [data-theme="emerald"] {
   --bg-main: #000d07;
   --bg-surface: #02130e;
@@ -119,27 +119,27 @@
   --gold: #f5d28a;
   --gold-light: #f9e2b8;
   --gold-dark: #b37b1f;
-  --gold-soft: rgba(245, 210, 138, 0.45);
+  --gold-soft: rgba(245, 210, 138, 0.48);
   --gold-gradient: linear-gradient(135deg, #f9e2b8 0%, #f5d28a 30%, #b37b1f 100%);
 
   --accent-green: #7be99a;
-  --accent-green-soft: rgba(123, 233, 154, 0.45);
+  --accent-green-soft: rgba(123, 233, 154, 0.48);
   --accent-amber: #f5d28a;
-  --accent-amber-soft: rgba(245, 210, 138, 0.45);
+  --accent-amber-soft: rgba(245, 210, 138, 0.48);
   --accent-red: #ff8f8f;
-  --accent-red-soft: rgba(255, 143, 143, 0.4);
+  --accent-red-soft: rgba(255, 143, 143, 0.42);
   --accent-blue: #8fc1ff;
-  --accent-blue-soft: rgba(143, 193, 255, 0.4);
+  --accent-blue-soft: rgba(143, 193, 255, 0.42);
 
-  --border-line: rgba(138, 185, 154, 0.28);
-  --border-gold: rgba(245, 210, 138, 0.82);
+  --border-line: rgba(138, 185, 154, 0.3);
+  --border-gold: rgba(245, 210, 138, 0.85);
 
   --shadow-sm: 0 9px 34px rgba(0,0,0,0.75);
   --shadow-md: 0 28px 75px rgba(0,0,0,0.9);
   --shadow-lg: 0 56px 140px rgba(0,0,0,0.99);
 }
 
-/* THEME 5: TITANIUM — Insanely Sharp Cool Luxury */
+/* THEME 5: TITANIUM — Insanely Sharp, Cool, Modern Luxury */
 [data-theme="titanium"] {
   --bg-main: #d9e4f2;
   --bg-surface: #ffffff;
@@ -174,7 +174,7 @@
 }
 
 /* ============================================
-   EXTREME CONTRAST + CRAZY LUXURY BASE
+   EXTREME CONTRAST + CRAZY LUXURY
    ============================================ */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 15px; }
@@ -260,3 +260,5 @@ input:focus, select:focus, textarea:focus {
 button, .check-button { transition: transform .15s ease, background .15s ease; }
 button:active { transform: scale(0.93); }
 .heat-cell:hover { transform: scale(1.5); z-index: 5; }
+THE_CRAZIEST_FINAL
+npm run build 2>&1 | tail -2
