@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useKronos } from '@/context/KronosContext';
 import { istDateText, istParts, todayId } from '@/lib/time/ist';
 import { ViewType } from '@/types';
-import { Plus, Edit3, User, Palette } from 'lucide-react';
+import { Plus, Edit3, User, Palette, Download } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeSwitcher } from '../ui/ThemeSwitcher';
 
@@ -58,6 +58,26 @@ export const Topbar: React.FC = () => {
           <Palette size={15} className="text-[var(--text-muted)]" />
           <ThemeSwitcher compact={true} />
         </div>
+
+        {/* Desktop Install + Mobile Insights Trigger */}
+        <Button 
+          variant="ghost" 
+          onClick={() => {
+            if (window.innerWidth < 768) {
+              // Trigger mobile drawer (via custom event for simplicity)
+              window.dispatchEvent(new CustomEvent('toggle-kronos-insights'));
+            } else {
+              // Show install prompt if available
+              const installBtn = document.querySelector('.pwa-install-banner button');
+              if (installBtn) (installBtn as HTMLElement).click();
+            }
+          }}
+          className="!px-2.5 !py-1.5 text-xs flex items-center gap-1.5"
+          title="Install or view insights"
+        >
+          <Download size={15} />
+          <span className="hidden sm:inline">Install</span>
+        </Button>
 
         <div className="ist-pill" aria-live="polite">
           <span>{istDateText()} • Day {todayId()}</span>

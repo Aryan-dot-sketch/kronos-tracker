@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 
-const NAV_ITEMS: { id: ViewType; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
+const NAV_ITEMS: { id: ViewType; label: string; icon: React.ComponentType<any> }[] = [
   { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
   { id: 'today', label: 'Today', icon: CheckSquare },
   { id: 'goal', label: 'Goal', icon: Target },

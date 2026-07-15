@@ -5,6 +5,7 @@ import { Topbar } from '@/components/layout/Topbar';
 import { RightInsightPanel } from '@/components/layout/RightInsightPanel';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { MobileFAB } from '@/components/ui/MobileFAB';
+import { InstallPWA } from '@/components/ui/InstallPWA';
 import { Toast } from '@/components/ui/Toast';
 
 // Modals
@@ -31,6 +32,13 @@ export const AppContent: React.FC = () => {
   const { activeView, state } = useKronos();
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile drawer toggle via custom event (from Topbar)
+  useEffect(() => {
+    const handler = () => setShowMobileDrawer(prev => !prev);
+    window.addEventListener('toggle-kronos-insights', handler);
+    return () => window.removeEventListener('toggle-kronos-insights', handler);
+  }, []);
 
   // Theme application
   useEffect(() => {
@@ -98,6 +106,9 @@ export const AppContent: React.FC = () => {
       <div className="mobile-only">
         <MobileFAB />
       </div>
+
+      {/* PWA Install Banner (desktop + mobile) */}
+      <InstallPWA />
 
       {/* Modals */}
       <TaskModal />
