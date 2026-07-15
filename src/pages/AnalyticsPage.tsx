@@ -5,6 +5,7 @@ import { SubjectBalanceChart } from '@/components/charts/SubjectBalanceChart';
 import { HeatmapGrid } from '@/components/charts/HeatmapGrid';
 import { AnalyticsSummary } from '@/components/analytics/AnalyticsSummary';
 import { AIPoweredPlanner } from '@/components/analytics/AIPoweredPlanner';
+import { ProgressReportPDF } from '@/components/analytics/ProgressReportPDF';
 import { formatMinutes, addDays, todayId, dateLabel } from '@/lib/time/ist';
 
 export const AnalyticsPage: React.FC = () => {
@@ -28,6 +29,8 @@ export const AnalyticsPage: React.FC = () => {
 
       <div className="content-grid">
         <AIPoweredPlanner />
+
+        <ProgressReportPDF />
 
         <section className="panel wide">
           <div className="panel-header">

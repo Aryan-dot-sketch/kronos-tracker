@@ -3,10 +3,10 @@ import { useKronos } from '@/context/KronosContext';
 import { exportJSON, exportTasksCSV, exportMocksCSV } from '@/lib/storage/export-import';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { Palette, Shield, Download, Trash2 } from 'lucide-react';
+import { Palette, Download, Trash2 } from 'lucide-react';
 
 export const SettingsForm: React.FC = () => {
-  const { state, saveSettings, saveGoal, openModal, clearStateData } = useKronos();
+  const { state, saveSettings, saveGoal, openModal } = useKronos();
 
   const [name, setName] = useState(state.settings.name);
   const [theme, setTheme] = useState(state.ui.theme || 'light');
@@ -110,10 +110,10 @@ export const SettingsForm: React.FC = () => {
           <Button
             variant="ghost"
             style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red-soft)', marginTop: '8px' }}
-            onClick={clearStateData}
+            onClick={() => openModal('deleteWarning')}
           >
             <Trash2 size={15} style={{ marginRight: '6px' }} />
-            Clear All Data & Reset Canvas
+            Clear All Data (Requires Safeguard Confirmation)
           </Button>
         </div>
       </section>

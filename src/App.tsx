@@ -13,6 +13,7 @@ import { ChapterModal } from '@/components/jee/ChapterModal';
 import { DayDetailModal } from '@/components/calendar/DayDetailModal';
 import { ImportModal } from '@/components/modals/ImportModal';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { DeleteWarningModal } from '@/components/modals/DeleteWarningModal';
 
 // Pages
 import { DashboardPage } from '@/pages/DashboardPage';
@@ -75,6 +76,7 @@ export const AppContent: React.FC = () => {
       <DayDetailModal />
       <ImportModal />
       <AuthModal />
+      <DeleteWarningModal />
 
       <Toast />
     </div>
