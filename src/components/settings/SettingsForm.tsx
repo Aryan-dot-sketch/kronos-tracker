@@ -113,6 +113,11 @@ export const SettingsForm: React.FC = () => {
             <Trash2 size={15} style={{ marginRight: '6px' }} />
             Clear All Data (Requires Safeguard Confirmation)
           </Button>
+
+          <div className="desktop-install-hint">
+            <strong>Pro tip:</strong> Install Kronos as a desktop app for the best experience.<br />
+            Look for the <strong>Install</strong> button in the topbar or use your browser menu.
+          </div>
         </div>
       </section>
     </div>
