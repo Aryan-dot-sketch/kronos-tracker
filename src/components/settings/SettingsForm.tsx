@@ -45,47 +45,32 @@ export const SettingsForm: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
   const [hasChanges, setHasChanges] = useState(false);
 
-  // Form state
   const [formData, setFormData] = useState({
     name: state.settings.name,
     theme: state.ui.theme || 'light',
-    
-    // Appearance
     fontScale: state.settings.fontScale || 'normal',
     density: state.settings.density || 'comfortable',
     showSeconds: state.settings.showSeconds ?? true,
     compactMode: state.settings.compactMode ?? false,
     chartStyle: state.settings.chartStyle || 'line',
-    
-    // Discipline
     successThreshold: state.settings.successThreshold || 70,
     dailyHours: state.goal.dailyHours || 8,
     studyDayCutoff: state.settings.studyDayCutoff || '00:00',
-    
-    // Notifications
     notificationsEnabled: state.settings.notificationsEnabled ?? true,
     dailyReminderTime: state.settings.dailyReminderTime || '21:00',
     streakReminder: state.settings.streakReminder ?? true,
-    
-    // Shortcuts
     keyboardShortcutsEnabled: state.settings.keyboardShortcutsEnabled ?? true,
-    
-    // Domain
     defaultDomain: state.settings.defaultDomain || 'General',
-    
-    // Privacy
     analyticsOptIn: state.settings.analyticsOptIn ?? true,
   });
 
   const [newSubject, setNewSubject] = useState('');
 
-  // Auto-apply changes (real-time feel)
   const applyChanges = (updates: Partial<typeof formData>) => {
     const newData = { ...formData, ...updates };
     setFormData(newData);
     setHasChanges(true);
 
-    // Apply immediately for visual settings
     saveSettings({
       name: newData.name,
       successThreshold: Number(newData.successThreshold),
@@ -111,7 +96,6 @@ export const SettingsForm: React.FC = () => {
   };
 
   const handleSave = () => {
-    // Final save (in case)
     applyChanges({});
     showToast('All settings saved successfully');
     setHasChanges(false);
@@ -171,23 +155,19 @@ export const SettingsForm: React.FC = () => {
   const subjects = state.goal.subjects || [];
 
   return (
-    <div className="content-grid" style={{ gridTemplateColumns: '240px 1fr' }}>
-      {/* Sidebar Tabs */}
-      <div className="panel" style={{ padding: '12px', height: 'fit-content' }}>
-        <div className="panel-header" style={{ marginBottom: '12px' }}>
+    <div className="settings-layout">
+      {/* Tab Sidebar */}
+      <div className="panel settings-tabs-panel">
+        <div className="panel-header">
           <h3 style={{ margin: 0, fontSize: '15px' }}>Settings</h3>
         </div>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+
+        <div className="settings-tabs">
           {TABS.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-3 w-full text-left px-3 py-2.5 rounded-xl text-sm transition-all ${
-                activeTab === tab.id 
-                  ? 'bg-[var(--gold-soft)] text-[var(--gold)] font-semibold' 
-                  : 'hover:bg-[var(--bg-surface)] text-[var(--text-secondary)]'
-              }`}
+              className={`settings-tab ${activeTab === tab.id ? 'active' : ''}`}
             >
               {tab.icon}
               <span>{tab.label}</span>
@@ -195,11 +175,11 @@ export const SettingsForm: React.FC = () => {
           ))}
         </div>
 
-        <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--border-line)' }}>
+        <div className="settings-sidebar-footer">
           <Button 
             variant="ghost" 
             onClick={resetToDefaults}
-            className="w-full flex items-center justify-center gap-2 text-sm"
+            className="w-full"
           >
             <RotateCcw size={15} /> Reset to Defaults
           </Button>
@@ -207,7 +187,7 @@ export const SettingsForm: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div>
+      <div className="settings-main">
         {/* Profile */}
         {activeTab === 'profile' && (
           <div className="panel">
@@ -228,26 +208,17 @@ export const SettingsForm: React.FC = () => {
               </label>
               <label>
                 Primary Goal Type
-                <input 
-                  value={state.goal.type} 
-                  disabled 
-                  style={{ opacity: 0.7 }} 
-                />
+                <input value={state.goal.type} disabled style={{ opacity: 0.7 }} />
               </label>
             </div>
 
-            <div style={{ marginTop: '16px' }}>
+            <div style={{ marginTop: '20px' }}>
               <label>Current Subjects / Modules</label>
               <div className="flex flex-wrap gap-2 mt-2 mb-3">
                 {subjects.map(s => (
                   <div key={s} className="pill flex items-center gap-1.5">
                     {s}
-                    <button 
-                      onClick={() => deleteSubject(s)}
-                      className="ml-1 text-[var(--accent-red)] hover:text-red-400"
-                    >
-                      ×
-                    </button>
+                    <button onClick={() => deleteSubject(s)} className="ml-1 text-[var(--accent-red)] hover:text-red-400">×</button>
                   </div>
                 ))}
               </div>
@@ -295,21 +266,13 @@ export const SettingsForm: React.FC = () => {
               </label>
             </div>
 
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-5">
               <label className="flex items-center gap-2">
-                <input 
-                  type="checkbox" 
-                  checked={formData.showSeconds} 
-                  onChange={e => handleInputChange('showSeconds', e.target.checked)} 
-                />
+                <input type="checkbox" checked={formData.showSeconds} onChange={e => handleInputChange('showSeconds', e.target.checked)} />
                 Show seconds in clock
               </label>
               <label className="flex items-center gap-2">
-                <input 
-                  type="checkbox" 
-                  checked={formData.compactMode} 
-                  onChange={e => handleInputChange('compactMode', e.target.checked)} 
-                />
+                <input type="checkbox" checked={formData.compactMode} onChange={e => handleInputChange('compactMode', e.target.checked)} />
                 Compact mode
               </label>
             </div>
@@ -322,23 +285,14 @@ export const SettingsForm: React.FC = () => {
             <div className="panel-header">
               <h3>Time &amp; Discipline Engine</h3>
             </div>
-
             <div className="form-grid three">
               <label>
                 Success Threshold (%)
-                <input 
-                  type="number" min="40" max="100" 
-                  value={formData.successThreshold} 
-                  onChange={e => handleInputChange('successThreshold', e.target.value)} 
-                />
+                <input type="number" min="40" max="100" value={formData.successThreshold} onChange={e => handleInputChange('successThreshold', e.target.value)} />
               </label>
               <label>
                 Daily Target Hours
-                <input 
-                  type="number" min="1" max="18" step="0.5"
-                  value={formData.dailyHours} 
-                  onChange={e => handleInputChange('dailyHours', e.target.value)} 
-                />
+                <input type="number" min="1" max="18" step="0.5" value={formData.dailyHours} onChange={e => handleInputChange('dailyHours', e.target.value)} />
               </label>
               <label>
                 Study Day Cutoff
@@ -357,39 +311,20 @@ export const SettingsForm: React.FC = () => {
             <div className="panel-header">
               <h3>Notifications &amp; Reminders</h3>
             </div>
-
             <div className="space-y-4">
               <label className="flex items-center justify-between">
                 <span>Enable Browser Notifications</span>
-                <input 
-                  type="checkbox" 
-                  checked={formData.notificationsEnabled} 
-                  onChange={e => handleInputChange('notificationsEnabled', e.target.checked)} 
-                />
+                <input type="checkbox" checked={formData.notificationsEnabled} onChange={e => handleInputChange('notificationsEnabled', e.target.checked)} />
               </label>
-              
               <label>
                 Daily Reminder Time
-                <input 
-                  type="time" 
-                  value={formData.dailyReminderTime} 
-                  onChange={e => handleInputChange('dailyReminderTime', e.target.value)} 
-                  disabled={!formData.notificationsEnabled}
-                />
+                <input type="time" value={formData.dailyReminderTime} onChange={e => handleInputChange('dailyReminderTime', e.target.value)} disabled={!formData.notificationsEnabled} />
               </label>
-
               <label className="flex items-center justify-between">
                 <span>Streak Protection Reminders</span>
-                <input 
-                  type="checkbox" 
-                  checked={formData.streakReminder} 
-                  onChange={e => handleInputChange('streakReminder', e.target.checked)} 
-                />
+                <input type="checkbox" checked={formData.streakReminder} onChange={e => handleInputChange('streakReminder', e.target.checked)} />
               </label>
             </div>
-            <p className="text-xs text-[var(--text-muted)] mt-3">
-              Notifications will be supported in a future update.
-            </p>
           </div>
         )}
 
@@ -419,14 +354,9 @@ export const SettingsForm: React.FC = () => {
               <h3>Keyboard Shortcuts</h3>
             </div>
             <label className="flex items-center gap-3 mb-4">
-              <input 
-                type="checkbox" 
-                checked={formData.keyboardShortcutsEnabled} 
-                onChange={e => handleInputChange('keyboardShortcutsEnabled', e.target.checked)} 
-              />
+              <input type="checkbox" checked={formData.keyboardShortcutsEnabled} onChange={e => handleInputChange('keyboardShortcutsEnabled', e.target.checked)} />
               Enable keyboard shortcuts
             </label>
-
             <div className="text-sm space-y-2 text-[var(--text-secondary)]">
               <div><strong>Ctrl/Cmd + K</strong> — Add new task</div>
               <div><strong>Ctrl/Cmd + /</strong> — Focus search</div>
@@ -445,10 +375,7 @@ export const SettingsForm: React.FC = () => {
             </div>
             <label>
               Default Domain / Subject
-              <select 
-                value={formData.defaultDomain} 
-                onChange={e => handleInputChange('defaultDomain', e.target.value)}
-              >
+              <select value={formData.defaultDomain} onChange={e => handleInputChange('defaultDomain', e.target.value)}>
                 {subjects.map(s => <option key={s} value={s}>{s}</option>)}
                 <option value="General">General</option>
               </select>
@@ -462,57 +389,35 @@ export const SettingsForm: React.FC = () => {
             <div className="panel-header">
               <h3>Data &amp; Privacy</h3>
             </div>
-
             <div className="space-y-5">
               <div>
                 <Button variant="ghost" onClick={() => exportJSON(state)}>Export Full JSON Backup</Button>
                 <div className="text-xs mt-1 text-[var(--text-muted)]">Complete portable backup of all your data.</div>
               </div>
-
               <div className="flex gap-2">
                 <Button variant="ghost" onClick={() => exportTasksCSV(state)}>Export Tasks (CSV)</Button>
                 <Button variant="ghost" onClick={() => exportMocksCSV(state)}>Export Mocks (CSV)</Button>
               </div>
-
-              <Button variant="ghost" onClick={() => openModal('import')}>
-                Import / Restore Backup
-              </Button>
-
+              <Button variant="ghost" onClick={() => openModal('import')}>Import / Restore Backup</Button>
               <div>
                 <label className="flex items-center gap-2">
-                  <input 
-                    type="checkbox" 
-                    checked={formData.analyticsOptIn} 
-                    onChange={e => handleInputChange('analyticsOptIn', e.target.checked)} 
-                  />
-                  Contribute anonymous usage data (helps improve Kronos)
+                  <input type="checkbox" checked={formData.analyticsOptIn} onChange={e => handleInputChange('analyticsOptIn', e.target.checked)} />
+                  Contribute anonymous usage data
                 </label>
               </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => openModal('deleteWarning')}
-                  style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red-soft)' }}
-                >
-                  <Trash2 size={15} style={{ marginRight: '8px' }} />
-                  Delete All Data (Permanent)
+              <div style={{ marginTop: '16px' }}>
+                <Button variant="ghost" onClick={() => openModal('deleteWarning')} style={{ color: 'var(--accent-red)' }}>
+                  <Trash2 size={15} style={{ marginRight: '8px' }} /> Delete All Data (Permanent)
                 </Button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Save bar */}
-        <div className="flex justify-end items-center gap-3 mt-6">
-          {hasChanges && (
-            <div className="text-xs flex items-center gap-1 text-[var(--gold)]">
-              <Check size={14} /> Changes applied
-            </div>
-          )}
-          <Button variant="primary" onClick={handleSave}>
-            Save All Changes
-          </Button>
+        {/* Global Save Bar */}
+        <div className="settings-save-bar">
+          {hasChanges && <div className="text-xs flex items-center gap-1 text-[var(--gold)]"><Check size={14} /> Changes applied live</div>}
+          <Button variant="primary" onClick={handleSave}>Save All Changes</Button>
         </div>
       </div>
     </div>
