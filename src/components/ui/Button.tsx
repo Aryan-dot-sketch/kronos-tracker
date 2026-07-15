@@ -20,7 +20,10 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   children,
   disabled,
-  ...props
+  onClick,
+  type = 'button',
+  title,
+  ...rest
 }) => {
   const baseClass = {
     primary: 'premium-button primary',
@@ -41,22 +44,13 @@ export const Button: React.FC<ButtonProps> = ({
 
   const isDisabled = disabled || loading;
 
-  const content = (
-    <>
-      {loading && (
-        <span className="btn-spinner" aria-hidden="true" />
-      )}
-      {!loading && leftIcon && (
-        <span className="btn-icon-left">{leftIcon}</span>
-      )}
-      <span className="btn-label">{children}</span>
-      {!loading && rightIcon && (
-        <span className="btn-icon-right">{rightIcon}</span>
-      )}
-    </>
-  );
+  // Only pass safe motion props
+  const motionProps: any = {
+    onClick,
+    title,
+    ...rest,
+  };
 
-  // Premium springy button with framer-motion
   return (
     <motion.button
       className={clsx(
@@ -82,9 +76,13 @@ export const Button: React.FC<ButtonProps> = ({
       }}
       disabled={isDisabled}
       aria-disabled={isDisabled}
-      {...props}
+      type={type}
+      {...motionProps}
     >
-      {content}
+      {loading && <span className="btn-spinner" aria-hidden="true" />}
+      {!loading && leftIcon && <span className="btn-icon-left">{leftIcon}</span>}
+      <span className="btn-label">{children}</span>
+      {!loading && rightIcon && <span className="btn-icon-right">{rightIcon}</span>}
     </motion.button>
   );
 };
