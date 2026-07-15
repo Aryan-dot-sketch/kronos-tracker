@@ -1036,3 +1036,101 @@ th { color: var(--text-muted); font-size: 10.5px; font-weight: 800; text-transfo
     display: block;
   }
 }
+
+/* ============================================
+   PHASE 1 POLISH - Premium Micro Details
+   ============================================ */
+
+.pwa-install-banner {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 130;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: 9999px;
+  padding: 10px 18px;
+  box-shadow: var(--shadow-lg);
+  max-width: 92vw;
+  width: 420px;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .pwa-install-banner {
+    bottom: 92px;
+    width: calc(100% - 32px);
+    border-radius: 16px;
+    padding: 12px 14px;
+  }
+}
+
+/* Premium hover states + micro polish */
+.nav-item, .task-row, .panel, .side-card {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0.0, 0.2, 1),
+              border-color 0.2s ease;
+}
+
+.nav-item:hover {
+  transform: translateX(3px);
+}
+
+.task-row:hover {
+  transform: translateY(-1px) scale(1.005);
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Beautiful focus states */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Subtle gold accents on active elements */
+.heat-cell[data-level="4"] {
+  box-shadow: 0 0 0 2px var(--gold-soft);
+}
+
+/* Improved empty states */
+.empty-state {
+  transition: all 0.3s ease;
+}
+
+/* Responsive table cards fallback on very small screens */
+@media (max-width: 420px) {
+  .table-wrap table,
+  .table-wrap thead,
+  .table-wrap tbody,
+  .table-wrap tr,
+  .table-wrap th,
+  .table-wrap td {
+    display: block;
+  }
+  .table-wrap tr {
+    margin-bottom: 12px;
+    border: 1px solid var(--border-line);
+    border-radius: 10px;
+    padding: 8px;
+  }
+  .table-wrap td {
+    border: none;
+    padding: 4px 0;
+  }
+}
+
+/* Desktop install hint in settings */
+.desktop-install-hint {
+  font-size: 12.5px;
+  background: var(--gold-soft);
+  border: 1px dashed var(--border-gold);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
