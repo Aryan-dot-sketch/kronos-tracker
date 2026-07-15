@@ -21,8 +21,8 @@ export const StreakBadge: React.FC<StreakBadgeProps> = ({ current, longest }) =>
         fontWeight: 700,
         boxShadow: isHot ? '0 0 0 3px var(--gold-soft)' : undefined
       }}
-      animate={isHot ? { scale: [1, 1.03, 1] } : {}}
-      transition={{ duration: 2, repeat: Infinity }}
+      animate={isHot ? { scale: [1, 1.04, 1] } : {}}
+      transition={{ duration: 1.8, repeat: Infinity }}
     >
       🔥 {current}d 
       <span style={{ opacity: 0.6, fontSize: '11px' }}>· best {longest}d</span>
