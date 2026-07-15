@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { fireConfetti } from '@/lib/utils/confetti';
+import { Edit3, Clock, Trash2 } from 'lucide-react';
 
 interface TaskCardProps {
   task: Task;
@@ -27,46 +28,78 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, compact = false }) => 
     toggleTask(task.id);
 
     if (!wasCompleted) {
-      // Premium completion delight
       fireConfetti('mild');
     }
   };
 
+  const priorityColor = {
+    critical: 'red',
+    high: 'gold',
+    medium: 'blue',
+    low: 'default',
+  }[task.priority] || 'default';
+
   return (
-    <motion.div 
-      className={clsx('task-row', isDone && 'completed', isMissed && 'missed')}
-      whileHover={{ scale: 1.005 }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    <motion.div
+      className={clsx('task-row premium-task', isDone && 'completed', isMissed && 'missed')}
+      whileHover={{ 
+        scale: 1.006, 
+        boxShadow: 'var(--shadow-md)' 
+      }}
+      whileTap={{ scale: 0.992 }}
+      transition={{ type: "spring", stiffness: 320, damping: 26 }}
     >
+      {/* Premium Check Button */}
       <motion.button
-        className="check-button"
+        className="check-button premium-check"
         onClick={handleToggle}
         aria-label="Toggle task completion"
-        whileTap={{ scale: 0.8 }}
-        animate={isDone ? { scale: [1, 1.3, 1] } : {}}
-        transition={{ duration: 0.4 }}
+        whileTap={{ scale: 0.75 }}
+        animate={isDone ? { scale: [1, 1.25, 1] } : {}}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        ✓
+        {isDone ? '✓' : ''}
       </motion.button>
 
-      <div>
+      <div className="task-content">
         <div className="task-title">{task.title}</div>
         <div className="task-meta">
-          <span className={clsx('priority-pill', `priority-${task.priority}`)}>
+          <span className={clsx('priority-pill', `priority-${task.priority}`, `pill-${priorityColor}`)}>
             {task.priority}
           </span>
-          <span>{task.subject}</span>
-          <span>{formatMinutes(task.estimate)}</span>
-          <span>{task.difficulty}</span>
-          {!compact && <span>{completionText}</span>}
+          <span className="task-subject">{task.subject}</span>
+          <span className="task-estimate">{formatMinutes(task.estimate)}</span>
+          <span className="task-difficulty">{task.difficulty}</span>
+          {!compact && <span className="task-status">{completionText}</span>}
         </div>
       </div>
 
-      <div className="task-actions">
-        <Button variant="tiny" onClick={() => openModal('task', task.id)}>Edit</Button>
-        <Button variant="tiny" onClick={() => logTaskTime(task.id)}>Log Time</Button>
-        <Button variant="tiny" onClick={() => deleteTask(task.id)}>Delete</Button>
+      {/* Premium Action Buttons */}
+      <div className="task-actions premium-actions">
+        <Button 
+          variant="icon" 
+          size="sm" 
+          onClick={() => openModal('task', task.id)}
+          title="Edit task"
+        >
+          <Edit3 size={15} />
+        </Button>
+        <Button 
+          variant="icon" 
+          size="sm" 
+          onClick={() => logTaskTime(task.id)}
+          title="Log time"
+        >
+          <Clock size={15} />
+        </Button>
+        <Button 
+          variant="icon" 
+          size="sm" 
+          onClick={() => deleteTask(task.id)}
+          title="Delete task"
+        >
+          <Trash2 size={15} />
+        </Button>
       </div>
     </motion.div>
   );

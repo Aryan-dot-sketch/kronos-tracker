@@ -5,6 +5,7 @@ import { ViewType } from '@/types';
 import { Plus, Edit3, User, Palette, Download } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeSwitcher } from '../ui/ThemeSwitcher';
+import { motion } from 'framer-motion';
 
 const VIEW_TITLES: Record<ViewType, [string, string]> = {
   dashboard: ['Premium Daily Execution', 'Dashboard'],
@@ -18,7 +19,7 @@ const VIEW_TITLES: Record<ViewType, [string, string]> = {
 };
 
 export const Topbar: React.FC = () => {
-  const { activeView, state, toggleTheme, openModal } = useKronos();
+  const { activeView, state, openModal } = useKronos();
   const [clockText, setClockText] = useState(() => istParts().timeText);
 
   useEffect(() => {
@@ -31,58 +32,72 @@ export const Topbar: React.FC = () => {
   const [eyebrow, title] = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
 
   return (
-    <header className="topbar">
+    <header className="topbar premium-topbar">
       <div>
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
       </div>
 
-      <div className="top-actions">
-        <Button variant="chip" onClick={() => openModal('auth')}>
-          <User size={15} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
+      <div className="top-actions premium-actions">
+        {/* Account — Premium pill */}
+        <Button 
+          variant="chip" 
+          onClick={() => openModal('auth')}
+          leftIcon={<User size={15} />}
+        >
           {state.settings.name || 'Account'}
         </Button>
 
-        <Button variant="ghost" onClick={() => openModal('goal')}>
-          <Edit3 size={15} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
+        <Button 
+          variant="ghost" 
+          onClick={() => openModal('goal')}
+          leftIcon={<Edit3 size={15} />}
+        >
           Edit Goal
         </Button>
 
-        <Button variant="primary" onClick={() => openModal('task')}>
-          <Plus size={15} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
+        {/* Primary CTA — Add Task */}
+        <Button 
+          variant="primary" 
+          onClick={() => openModal('task')}
+          leftIcon={<Plus size={17} />}
+          size="md"
+        >
           Add Task
         </Button>
 
         {/* Premium Theme Switcher */}
-        <div className="flex items-center gap-2 pl-1 border-l border-[var(--border-line)]">
+        <div className="flex items-center gap-2 pl-2 border-l border-[var(--border-line)]">
           <Palette size={15} className="text-[var(--text-muted)]" />
           <ThemeSwitcher compact={true} />
         </div>
 
-        {/* Desktop Install + Mobile Insights Trigger */}
+        {/* Install / Insights */}
         <Button 
-          variant="ghost" 
+          variant="outline" 
+          size="sm"
           onClick={() => {
             if (window.innerWidth < 768) {
-              // Trigger mobile drawer (via custom event for simplicity)
               window.dispatchEvent(new CustomEvent('toggle-kronos-insights'));
             } else {
-              // Show install prompt if available
               const installBtn = document.querySelector('.pwa-install-banner button');
               if (installBtn) (installBtn as HTMLElement).click();
             }
           }}
-          className="!px-2.5 !py-1.5 text-xs flex items-center gap-1.5"
           title="Install or view insights"
         >
           <Download size={15} />
           <span className="hidden sm:inline">Install</span>
         </Button>
 
-        <div className="ist-pill" aria-live="polite">
+        {/* IST Clock Pill — Premium */}
+        <motion.div 
+          className="ist-pill premium-clock-pill"
+          whileHover={{ scale: 1.01 }}
+        >
           <span>{istDateText()} • Day {todayId()}</span>
           <strong>{clockText}</strong>
-        </div>
+        </motion.div>
       </div>
     </header>
   );
