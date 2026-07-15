@@ -1,9 +1,9 @@
 /* ============================================
-   KRONOS TRACKER — THE MOST CRAZY ULTRA-LUXURY THEMES
-   Extreme drama, insane contrast, breathtaking golds
+   KRONOS TRACKER — THE CRAZIEST ULTRA-LUXURY THEMES
+   Insanely dramatic, luxurious, extreme contrast, breathtaking golds
    ============================================ */
 
-/* THEME 1: CLASSIC CREAM — Warm, Rich, Royal Luxury */
+/* THEME 1: CLASSIC CREAM — Warm, Royal, Opulent */
 :root, [data-theme="light"] {
   --bg-main: #f0e0c4;
   --bg-surface: #fff2d9;
@@ -174,7 +174,7 @@
 }
 
 /* ============================================
-   EXTREME CONTRAST + CRAZY LUXURY
+   EXTREME CONTRAST + CRAZY LUXURY BASE
    ============================================ */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 15px; }
@@ -260,5 +260,3 @@ input:focus, select:focus, textarea:focus {
 button, .check-button { transition: transform .15s ease, background .15s ease; }
 button:active { transform: scale(0.93); }
 .heat-cell:hover { transform: scale(1.5); z-index: 5; }
-THE_CRAZIEST_FINAL
-npm run build 2>&1 | tail -2
