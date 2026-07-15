@@ -4,6 +4,8 @@ import { useKronos } from '@/context/KronosContext';
 import { TZ, formatMinutes, titleCase } from '@/lib/time/ist';
 import { Button } from '../ui/Button';
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import { fireConfetti } from '@/lib/utils/confetti';
 
 interface TaskCardProps {
   task: Task;
@@ -20,15 +22,33 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, compact = false }) => 
     ? `${new Intl.DateTimeFormat('en-IN', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(task.completedAt))} IST`
     : titleCase(task.status || 'pending');
 
+  const handleToggle = () => {
+    const wasCompleted = isDone;
+    toggleTask(task.id);
+
+    if (!wasCompleted) {
+      // Premium completion delight
+      fireConfetti('mild');
+    }
+  };
+
   return (
-    <div className={clsx('task-row', isDone && 'completed', isMissed && 'missed')}>
-      <button
+    <motion.div 
+      className={clsx('task-row', isDone && 'completed', isMissed && 'missed')}
+      whileHover={{ scale: 1.005 }}
+      whileTap={{ scale: 0.985 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    >
+      <motion.button
         className="check-button"
-        onClick={() => toggleTask(task.id)}
+        onClick={handleToggle}
         aria-label="Toggle task completion"
+        whileTap={{ scale: 0.8 }}
+        animate={isDone ? { scale: [1, 1.3, 1] } : {}}
+        transition={{ duration: 0.4 }}
       >
         ✓
-      </button>
+      </motion.button>
 
       <div>
         <div className="task-title">{task.title}</div>
