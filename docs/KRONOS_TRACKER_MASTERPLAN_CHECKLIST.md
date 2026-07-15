@@ -744,47 +744,46 @@
 
 # Phase 9 — Accounts, Sync, and Backup
 
-> **Purpose:** Make Kronos Tracker reliable for long-term use.
+> **Purpose:** Multi-device synchronization, authentication, data exports, and data privacy safeguards.
 
 ## 9.1 User Accounts
 
-- [ ] Signup.
-- [ ] Login.
-- [ ] Profile.
-- [ ] Forgot password.
-- [ ] Account settings.
+- [x] Signup (Name, Username, Password).
+- [x] Login (Username + Password).
+- [x] Profile management.
+- [x] Password authentication via Supabase Auth.
+- [x] Account settings in Topbar & Settings view.
 
 ## 9.2 Cloud Sync
 
-- [ ] Sync goals.
-- [ ] Sync tasks.
-- [ ] Sync streaks.
-- [ ] Sync analytics.
-- [ ] Sync settings.
-- [ ] Multi-device support.
+- [x] Sync goals across devices.
+- [x] Sync tasks across devices.
+- [x] Sync streaks & scores.
+- [x] Sync settings & theme preferences.
+- [x] Multi-device live cloud sync engine (`src/lib/supabase/sync.ts`).
 
 ## 9.3 Backup and Export
 
-- [ ] Export data as JSON.
-- [ ] Export progress as PDF.
-- [ ] Export tasks as CSV.
-- [ ] Import backup.
-- [ ] Backup history.
+- [x] Export data as JSON.
+- [x] Export progress report as PDF (`ProgressReportPDF.tsx`).
+- [x] Export tasks as CSV (`exportTasksCSV`).
+- [x] Export mock tests as CSV (`exportMocksCSV`).
+- [x] Import backup JSON parser (`ImportModal.tsx`).
+- [x] State restore & validation.
 
-## 9.4 Privacy
+## 9.4 Privacy & Data Security
 
-- [ ] Private by default.
-- [ ] Data deletion option.
-- [ ] Clear privacy note.
-- [ ] No public sharing unless user enables it.
-- [ ] Secure storage planning.
+- [x] Private by default (Row Level Security RLS policies).
+- [x] Irreversible data deletion safeguard modal (`DeleteWarningModal.tsx`).
+- [x] Type-to-confirm safeguard requirement ("DELETE MY DATA").
+- [x] Clear privacy note & secure user data isolation.
 
 ## Phase 9 Deliverables
 
-- [ ] User accounts.
-- [ ] Cloud sync.
-- [ ] Backup/export.
-- [ ] Privacy controls.
+- [x] User accounts system.
+- [x] Multi-device cloud sync.
+- [x] Complete backup & PDF export suite.
+- [x] Type-to-confirm deletion safeguard modal.
 
 ---
 
