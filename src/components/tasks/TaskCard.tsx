@@ -68,6 +68,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, compact = false }) => 
         <Button variant="tiny" onClick={() => logTaskTime(task.id)}>Log Time</Button>
         <Button variant="tiny" onClick={() => deleteTask(task.id)}>Delete</Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
